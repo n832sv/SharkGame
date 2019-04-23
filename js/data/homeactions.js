@@ -6,7 +6,7 @@ SharkGame.HomeActions = {
         name: "Catch fish",
         effect: {
             resource: {
-                'fish': 100000
+                'fish': 1
             }
         },
         cost: {},
