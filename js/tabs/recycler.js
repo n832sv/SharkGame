@@ -48,6 +48,12 @@ SharkGame.Recycler = {
         "seaApple"
     ],
 
+    allowedResources: [
+        "kelp",
+        "coral",
+        "sand"
+    ],
+
     init: function() {
         var y = SharkGame.Recycler;
         // register tab
@@ -156,7 +162,8 @@ SharkGame.Recycler = {
         $.each(SharkGame.ResourceTable, function(k, v) {
             if(r.getTotalResource(k) > 0
                 && y.allowedCategories[r.getCategoryOfResource(k)]
-                && y.bannedResources.indexOf(k) === -1) {
+                && y.bannedResources.indexOf(k) === -1 
+				&& y.allowedResources.indexOf(k) === 1) {
                 SharkGame.Button.makeButton("input-" + k, "Recycle " + r.getResourceName(k), inputButtonDiv, y.onInput);
                 SharkGame.Button.makeButton("output-" + k, "Convert to " + r.getResourceName(k), outputButtonDiv, y.onOutput);
             }

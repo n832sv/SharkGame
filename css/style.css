@@ -233,6 +233,7 @@ pre {
   padding: 0.5em;
   overflow: hidden;
   text-align: left;
+  width:90%;
 }
 #sidebar table h3 {
   padding: .2em;

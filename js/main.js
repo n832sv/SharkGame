@@ -46,14 +46,6 @@ $.extend(SharkGame, {
     gameOver: false,
     wonGame: false,
 
-    credits: "<p>This game was originally created in 3 days for Seamergency 2014.<br/>" +
-    "<span class='smallDesc'>(Technically it was 4 days, but sometimes plans go awry.)</span></p>" +
-    "<p>It was made by <a href='http://cirri.al'>Cirr</a> who needs to update his website.<br/>" +
-    "He has a rarely updated <a href='https://twitter.com/Cirrial'>Twitter</a> though.</p>" +
-    "<p>Additional code and credit help provided by Dylan and Sam Red.<br/>" +
-    "<span class='smallDesc'>Dylan is also graciously hosting this game.</span></p>",
-
-
     ending: "<p>Congratulations! You did it.<br/>You saved the sharks!</p>" +
     "<p>The gate leads away from this strange ocean...</p>" +
     "<p>Back home to the oceans you came from!</p>" +
@@ -66,18 +58,6 @@ $.extend(SharkGame, {
     "If you have no idea what these actions do, click the \"Toggle descriptions\" button for more information.</p>" +
     "<p>If you are ever stuck, try actions you haven't yet tried. " +
     "Remember, though, that sometimes patience is the only way forward. Patience and ever escalating numbers.</p>",
-
-    donate: "<p>You can <a href='http://www.sharktrust.org/en/donate' target='_blank'>donate to help save sharks and mantas</a>!</p>" +
-    "<p>Seems only fitting, given this game was made for a charity stream!</p>" +
-    "<p><span class='smallDescAllowClicks'>(But if you'd rather, you can also " +
-    "<a href='https://www.paypal.com/cgi-bin/" +
-    "webscr?cmd=_donations&business=G3WPPAYAWTJCJ&lc=GB&" +
-    "item_name=Shark%20Game%20Developer%20Support&" +
-    "item_number=Shark%20Game%20Support&no_note=1&" +
-    "no_shipping=1&currency_code=USD&" +
-    "bn=PP%2dDonationsBF%3adonate%2epng%3aNonHosted' " +
-    "target='_blank'>support the developer</a>" +
-    " if you'd like.)</span></p>",
 
     spriteIconPath: "img/sharksprites.png",
     spriteHomeEventPath: "img/sharkeventsprites.png",
@@ -174,14 +154,6 @@ SharkGame.TitleBar = {
         }
     },
 
-    changelogLink: {
-        name: "changelog",
-        main: false,
-        onClick: function() {
-            SharkGame.Main.showChangelog();
-        }
-    },
-
     helpLink: {
         name: "help",
         main: true,
@@ -205,22 +177,6 @@ SharkGame.TitleBar = {
                     SharkGame.Main.endGame();
                 }
             }
-        }
-    },
-
-    creditsLink: {
-        name: "credits",
-        main: false,
-        onClick: function() {
-            SharkGame.Main.showPane("Credits", SharkGame.credits);
-        }
-    },
-
-    donateLink: {
-        name: "donate",
-        main: false,
-        onClick: function() {
-            SharkGame.Main.showPane("Donate", SharkGame.donate);
         }
     }
 };
