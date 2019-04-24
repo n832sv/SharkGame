@@ -1,7 +1,9 @@
 # Shark Game #
 
-Shark Game is a web game made entirely in HTML, CSS and JavaScript. It is a game belonging to the "idle" or "incremental" genre. It does not require constant player attention, and can progress while the player does other things before returning to it. This isn't in any way a new or pioneering concept - a lot of people have probably heard of Candy Box or A Dark Room, or the more popular contemporary Cookie Clicker.
+HTML + Javascript + CSS based game inspired by Kitten's Game (By Bloodrizer)
+Original version made by Cirral Git: https://github.com/Cirrial/SharkGame
+Current version by me.
 
-## Development Plan ##
+A playable/testable of this modified version can be found at:
+http://www.anvianet.fi/382/sharkgame/
 
-All development plans are in plans.txt. Suffice to say spoilers lurk within that file, and all plans are susceptible to change on a whim.
