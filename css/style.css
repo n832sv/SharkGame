@@ -208,10 +208,25 @@ pre {
   overflow: auto;
 }
 
+#rightsidebar {
+  float: right;
+  width: 20%;
+  display: block;
+  background-color: #2e4372;
+  -webkit-box-shadow: 0 0 5px 5px #13264d inset;
+  -moz-box-shadow: 0 0 5px 5px #13264d inset;
+  box-shadow: 0 0 5px 5px #13264d inset;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  overflow: hidden;
+}
+
 #sidebar {
   float: left;
   text-align: left;
-  width: 25%;
+  width: 20%;
   background-color: #2e4372;
   -webkit-box-shadow: 0 0 5px 5px #13264d inset;
   -moz-box-shadow: 0 0 5px 5px #13264d inset;
