@@ -92,6 +92,11 @@ h4 {
   border-radius: 10px;
   height: 100%;
 }
+
+#middlewrapper {
+	width: 100%;
+}
+
 pre {
   text-align: left;
 }
@@ -208,20 +213,7 @@ pre {
   overflow: auto;
 }
 
-#rightsidebar {
-  float: right;
-  width: 20%;
-  display: block;
-  background-color: #2e4372;
-  -webkit-box-shadow: 0 0 5px 5px #13264d inset;
-  -moz-box-shadow: 0 0 5px 5px #13264d inset;
-  box-shadow: 0 0 5px 5px #13264d inset;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding: 5px;
-  overflow: hidden;
-}
+
 
 #sidebar {
   float: left;
@@ -237,6 +229,36 @@ pre {
   padding: 5px;
   overflow: hidden;
 }
+
+#content {
+  background-color: #2e4372;
+  width: auto;
+  -webkit-box-shadow: 0 0 5px 5px #13264d inset;
+  -moz-box-shadow: 0 0 5px 5px #13264d inset;
+  box-shadow: 0 0 5px 5px #13264d inset;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  overflow: hidden;
+  padding: 0.5em;
+}
+
+#rightsidebar {
+  float: right;
+  width: 20%;
+  display: block;
+  background-color: #2e4372;
+  -webkit-box-shadow: 0 0 5px 5px #13264d inset;
+  -moz-box-shadow: 0 0 5px 5px #13264d inset;
+  box-shadow: 0 0 5px 5px #13264d inset;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  overflow: hidden;
+}
+
 #sidebar #resourceTableContainer {
   margin-left: auto;
   margin-right: auto;
@@ -302,18 +324,7 @@ pre {
 #resource-essence {
   text-shadow: 0 0 0.6em #ace3d1;
 }
-#content {
-  background-color: #2e4372;
-  -webkit-box-shadow: 0 0 5px 5px #13264d inset;
-  -moz-box-shadow: 0 0 5px 5px #13264d inset;
-  box-shadow: 0 0 5px 5px #13264d inset;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding: 5px;
-  overflow: hidden;
-  padding: 0.5em;
-}
+
 #tabMessage {
   padding: 5px;
   margin: 5px;
