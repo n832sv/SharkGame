@@ -25,7 +25,7 @@ SharkGame.Settings = {
     },
 
     groupResources: {
-        defaultSetting: false,
+        defaultSetting: true,
         name: "Group Resources",
         desc: "Group resources in the table into categories for legibility.",
         show: true,
@@ -39,7 +39,7 @@ SharkGame.Settings = {
     },
 
     buttonDisplayType: {
-        defaultSetting: "list",
+        defaultSetting: "pile",
         name: "Home Sea Button Display",
         desc: "Do you want a vertical list of buttons, or a more space-saving configuration?",
         show: true,
@@ -103,7 +103,7 @@ SharkGame.Settings = {
     },
 
     sidebarWidth: {
-        defaultSetting: "25%",
+        defaultSetting: "20%",
         name: "Sidebar Width",
         desc: "How much screen estate the sidebar should take.",
         show: true,
@@ -153,7 +153,7 @@ SharkGame.Settings = {
     },
 
     iconPositions: {
-        defaultSetting: "top",
+        defaultSetting: "side",
         name: "Icon Positions",
         desc: "Where should icons go on the buttons?",
         show: true,

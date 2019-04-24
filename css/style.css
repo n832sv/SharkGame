@@ -123,6 +123,7 @@ pre {
 }
 #title {
   clear: both;
+  height: 160px;
   background-color: #2e4372;
   -webkit-box-shadow: 0 0 5px 5px #13264d inset;
   -moz-box-shadow: 0 0 5px 5px #13264d inset;
