@@ -198,10 +198,12 @@ SharkGame.Home = {
         content.append(buttonTabDiv);
         h.createButtonTabs();
         // help button
+		/*
         var helpButtonDiv = $('<div>');
         helpButtonDiv.css({margin: "auto", clear: "both"});
         SharkGame.Button.makeButton("helpButton", "&nbsp Toggle descriptions &nbsp", helpButtonDiv, h.toggleHelp).addClass("min-block");
         content.append(helpButtonDiv);
+		*/
         // button list
         var buttonList = $('<div>').attr("id", "buttonList");
         content.append(buttonList);
@@ -516,7 +518,7 @@ SharkGame.Home = {
         var buttonListSel = $('#buttonList');
         var actionData = SharkGame.HomeActions[actionName];
 
-        var buttonSelector = SharkGame.Button.makeButton(actionName, actionData.name, buttonListSel, h.onHomeButton);
+        var buttonSelector = SharkGame.Button.makeButton(actionName, actionData.name, buttonListSel, h.onHomeButton, "buttonhome");
         h.updateButton(actionName);
         if(SharkGame.Settings.current.showAnimations) {
             buttonSelector.hide()

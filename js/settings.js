@@ -16,7 +16,7 @@ SharkGame.Settings = {
     },
 
     showTabHelp: {
-        defaultSetting: false,
+        defaultSetting: true,
         show: false,
         options: [
             true,

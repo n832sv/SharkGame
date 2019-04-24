@@ -102,7 +102,7 @@ SharkGame.Lab = {
                 if(prereqsMet) {
                     // add button
                     var effects = SharkGame.Lab.getResearchEffects(value);
-                    var buttonSelector = SharkGame.Button.makeLabButton(key, value.name + "<br/>" + value.desc + "<br/>" + effects, buttonList, l.onLabButton);
+                    var buttonSelector = SharkGame.Button.makeButton(key, value.name + "<br/>" + value.desc + "<br/>" + effects, buttonList, l.onLabButton, "buttonlaboratory");
                       l.updateLabButton(key);
                     if(SharkGame.Settings.current.showAnimations) {
                         buttonSelector.hide()

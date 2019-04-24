@@ -339,7 +339,7 @@ SharkGame.Resources = {
         var statusDiv = $('#status');
         // if resource table does not exist, create
         if(rTable.length <= 0) {
-            statusDiv.prepend('<h3>Stuff</h3>');
+            statusDiv.prepend('<h3>Inventory</h3>');
             var tableContainer = $('<div>').attr("id", "resourceTableContainer");
             tableContainer.append($('<table>').attr("id", 'resourceTable'));
             statusDiv.append(tableContainer);
