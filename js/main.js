@@ -546,7 +546,7 @@ SharkGame.Main = {
             var disableButton = (v === SharkGame.Settings.current.buyAmount);
             buttonList.prepend($('<li>')
                 .append($('<button>')
-                    .addClass("min")
+                    .addClass("min buybuttons")
                     .attr("id", "buy-" + v)
                     .prop("disabled", disableButton)
             ));

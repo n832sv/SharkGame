@@ -214,10 +214,8 @@ pre {
 #contentMenu #tabButtons {
   float: right;
   width: 30em;
-  overflow: auto;
+  overflow: hidden;
 }
-
-
 
 #sidebar {
   float: left;
@@ -416,6 +414,13 @@ button.newlyDiscovered:disabled div {
 button.newlyDiscovered div.tint:before {
   background: rgba(23, 70, 54, 0.8);
 }
+
+.buybuttons {
+ font-size: 0.7em;
+ height: 3.2em;
+ width: 6em !important;
+ max-width: 30em;
+}
 #homeTabs {
   margin-bottom: 1em;
 }
@@ -585,7 +590,7 @@ button {
   color: #ffffff;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
-  border-radius: 10px;
+  border-radius: 7px;
   border: 2px solid #7788aa;
   padding: 10px;
   margin: 1% auto;
