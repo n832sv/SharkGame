@@ -311,8 +311,8 @@ SharkGame.HomeActions = {
             }
         },
         cost: [
-            {resource: "crystal", costFunction: "constant", priceIncrease: 5},
-            {resource: "sand", costFunction: "constant", priceIncrease: 15}
+            {resource: "crystal", costFunction: "constant", priceIncrease: 30},
+            {resource: "sand", costFunction: "constant", priceIncrease: 50}
         ],
         max: "sharkonium",
         prereq: {
@@ -344,8 +344,8 @@ SharkGame.HomeActions = {
             }
         },
         cost: [
-            {resource: "coral", costFunction: "constant", priceIncrease: 10},
-            {resource: "sand", costFunction: "constant", priceIncrease: 10}
+            {resource: "coral", costFunction: "constant", priceIncrease: 40},
+            {resource: "sand", costFunction: "constant", priceIncrease: 40}
         ],
         max: "coralglass",
         prereq: {
@@ -371,8 +371,8 @@ SharkGame.HomeActions = {
             }
         },
         cost: [
-            {resource: "coral", costFunction: "constant", priceIncrease: 15},
-            {resource: "crystal", costFunction: "constant", priceIncrease: 5}
+            {resource: "coral", costFunction: "constant", priceIncrease: 60},
+            {resource: "crystal", costFunction: "constant", priceIncrease: 20}
         ],
         max: "delphinium",
         prereq: {

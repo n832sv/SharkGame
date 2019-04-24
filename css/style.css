@@ -207,6 +207,7 @@ pre {
   width: 30em;
   overflow: auto;
 }
+
 #sidebar {
   float: left;
   text-align: left;
@@ -246,7 +247,7 @@ pre {
   border-bottom: 0.1em dashed #7788aa;
 }
 #sidebar td {
-  font-size: 1.1em;
+  font-size: 0.9em;
   padding: 0.1em;
   word-break: break-all;
   word-wrap: break-word;
@@ -667,6 +668,11 @@ button:disabled div {
   display: inline-block;
   margin: 0em 0.4em 0.4em 0.4em;
 }
+
+.button_laboratory {
+  width: 80%;
+}
+
 .tint {
   position: relative;
 }

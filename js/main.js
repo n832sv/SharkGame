@@ -920,6 +920,13 @@ SharkGame.Button = {
             .appendTo(div)
             .click(handler);
     },
+    makeLabButton: function(id, name, div, handler) {
+        return $("<button>").html(name)
+            .attr("id", id)
+            .attr("class", "button_laboratory")
+            .appendTo(div)
+            .click(handler);
+    },
 
     replaceButton: function(id, name, handler) {
         return $('#' + id).html(name)
