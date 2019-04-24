@@ -823,125 +823,100 @@ SharkGame.ResourceTable = {
 SharkGame.ResourceCategories = {
     special: {
         name: "Special",
-        disposeMessage: [
-            "What have you done??"
-        ],
+        disposeMessage: ["What have you done??"],
         resources: [
             "numen",
             "essence"
         ]
     },
-    frenzy: {
-        name: "Frenzy",
-        disposeMessage: [
-            "You bid farewell as your community gets smaller.",
-            "Goodbye, faithful workforce. There's plenty of other fish out in the sea.",
-            "Well, it was good while it lasted.",
-            "Perhaps one day they'll send you a message of how they're doing.",
-            "Yes, throw your friends away. Callously discard them. I won't judge you.",
-            "Was it something they said?",
-            "Are you happy with what you've done?"
-        ],
+
+    sharks: {
+        name: "Sharks",
+		disposeMessage: [ "Goodbye" ],
         resources: [
             "shark",
-            "ray",
-            "crab",
-            "shrimp",
-            "lobster",
-            "dolphin",
-            "whale",
             "chimaera",
-            "octopus",
-            "eel"
         ]
     },
-    breeders: {
-        name: "Breeders",
-        disposeMessage: [
-            "Parenting is hard work anyway.",
-            "Overpopulation is a real concern!",
-            "Responsible population management is always good to see.",
-            "You sure you want to disrupt this accelerated growth curve?",
-            "Back to a simpler life, maybe."
-        ],
-        resources: [
-            "nurse",
-            "maker",
-            "brood",
-            "queen",
-            "berrier",
-            "biologist",
-            "pit"
-        ]
-    },
-    specialists: {
-        name: "Specialists",
-        disposeMessage: [
-            "All that training for nothing. Oh well.",
-            "Their equipment isn't salvageable, unfortunately, but that's how these things go. The ocean gives, and the ocean corrodes things away.",
-            "Well, they'll be waiting if you need them to take up their specialisation again.",
-            "They might be happier this way. Or maybe they were happier before. Well, 50-50 odds!",
-            "Back to their past jobs and simpler lives.",
-            "They return to what they once knew best."
-        ],
-        resources: [
-            "scientist",
-            "diver",
-            "laser",
-            "planter",
-            "worker",
-            "harvester",
-            "philosopher",
-            "treasurer",
-            "chorus",
-            "transmuter",
-            "explorer",
-            "collector",
-            "scavenger",
-            "technician",
-            "sifter"
-        ]
-    },
+
+	cephalopods: {
+		name: "Cephalopods",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"octopus"
+		]
+	},
+
+	crustaceans: {
+		name: "Crustaceans",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"crab",
+			"lobster",
+			"shrimp",
+		]
+	},
+
+	cetaceans: {
+		name: "Cetaceans",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"dolphin",
+			"whale"
+		]
+	},
+
+	batoidea: {
+		name: "Batoidea",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"ray",
+		],
+	},
+
+	medusozoa: {
+		name: "Medusozoa",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"jellyfish"
+		],
+	},
+
+	molluscs: {
+		name: "Molluscs",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"clam"
+		],
+	},
+
+	porifera: {
+		name: "Porifera",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"sponge"
+		],
+	},
+
+	algae: {
+		name: "Algae",
+		disposeMessage: [ "Goodbye" ],
+		resources: [
+			"kelp"
+		],
+	},		
+
     machines: {
         name: "Machines",
-        disposeMessage: [
-            "The stopped machines are left as a home for tinier life.",
-            "The machines calculate your actions as inefficient and a danger to productivity.",
-            "The machines want to know if they will dream.",
-            "'Daisy, Daisy, give me your answer do...'",
-            "An engineer shark looks on as their hard work lies buried under the sands.",
-            "The other machines feel a little quieter and almost resentful."
-        ],
+        disposeMessage: ["The stopped machines are left as a home for tinier life." ],
         resources: [
             "crystalMiner",
-            "sandDigger",
-            "autoTransmuter",
-            "fishMachine",
-            "skimmer",
-            "purifier",
-            "heater",
-            "spongeFarmer",
-            "berrySprayer",
-            "glassMaker",
-            "silentArchivist",
-            "tirelessCrafter",
-            "clamCollector",
-            "sprongeSmelter",
-            "seaScourer",
-            "prostheticPolyp",
-            "eggBrooder"
         ]
     },
+
     science: {
         name: "Science",
-        disposeMessage: [
-            "Thousands of sharkhours of research down the drain.",
-            "What possible reason are you doing this for?!",
-            "The shark academies will hear of this anti-intellectual act of barbarism!",
-            "The science advisors frantically murmur among themselves while disposing of the science.",
-            "We're getting rid of the science now! No more learning! No more progression! Just mindlessly clicking the exact same buttons we've been clicking for hours!!",
-            "Are you afraid of PROGRESS?"
-        ],
+        disposeMessage: ["Thousands of sharkhours of research down the drain." ],
         resources: [
             "science"
         ]
@@ -949,24 +924,16 @@ SharkGame.ResourceCategories = {
     animals: {
         name: "Animals",
         disposeMessage: [
-            "Go free, simple creatures!",
-            "What does famine even mean, really?",
-            "We'll probably not need that or regret it or whatever.",
-            "But we need that to eat!",
-            "We didn't need all of that anyway.",
-            "Do you think the aim of the game is to make the numbers go DOWN?!",
             "Sure hope you know what you're doing here."
         ],
         resources: [
             "fish",
             "seaApple",
-            "sponge",
-            "jellyfish",
-            "clam"
         ]
     },
-    stuff: {
-        name: "Materials",
+
+    raw: {
+        name: "Raw resources",
         disposeMessage: [
             "The stuff is dumped in some random hole in the ocean.",
             "We didn't need that anyway. Right? I think we didn't.",
@@ -978,30 +945,20 @@ SharkGame.ResourceCategories = {
         ],
         resources: [
             "sand",
-            "crystal",
-            "kelp",
-            "coral",
-            "algae"
+            "coral"
         ]
     },
-    processed: {
-        name: "Processed",
+
+    materials: {
+        name: "Materials",
         disposeMessage: [
-            "Disposed of, very carefully, with lots of currents and plenty of distance.",
-            "Industrial waste, coming through.",
-            "This stuff is hopefully not toxic. Hopefully.",
-            "This stuff is the future! The future of awkward-to-dispose substances!",
-            "The foundation of a modern shark frenzy, perhaps, but also sort of taking up all the space.",
             "Let's hope we don't regret it."
         ],
         resources: [
-            "sharkonium",
-            "coralglass",
-            "delphinium",
-            "spronge",
-            "junk"
+            "sharkonium"
         ]
     },
+
     harmful: {
         name: "Harmful",
         disposeMessage: [
