@@ -163,7 +163,7 @@ SharkGame.Stats = {
             if(employmentPool) {
                 r.changeResource(employmentPool, amountToDispose);
             }
-            l.addMessage(SharkGame.choose(category.disposeMessage));
+            l.addMessage(SharkGame.choose(SharkGame.text.resource_category_dispose_messages[category.name]));
         } else {
             l.addMessage("Can't dispose that much! You don't have enough of it.");
         }

@@ -823,7 +823,6 @@ SharkGame.ResourceTable = {
 SharkGame.ResourceCategories = {
     special: {
         name: "Special",
-        disposeMessage: ["What have you done??"],
         resources: [
             "numen",
             "essence"
@@ -832,7 +831,6 @@ SharkGame.ResourceCategories = {
 
     sharks: {
         name: "Sharks",
-		disposeMessage: [ "Goodbye" ],
         resources: [
             "shark",
             "chimaera",
@@ -841,7 +839,6 @@ SharkGame.ResourceCategories = {
 
 	cephalopods: {
 		name: "Cephalopods",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"octopus"
 		]
@@ -849,7 +846,6 @@ SharkGame.ResourceCategories = {
 
 	crustaceans: {
 		name: "Crustaceans",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"crab",
 			"lobster",
@@ -859,7 +855,6 @@ SharkGame.ResourceCategories = {
 
 	cetaceans: {
 		name: "Cetaceans",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"dolphin",
 			"whale"
@@ -868,7 +863,6 @@ SharkGame.ResourceCategories = {
 
 	batoidea: {
 		name: "Batoidea",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"ray",
 		],
@@ -876,7 +870,6 @@ SharkGame.ResourceCategories = {
 
 	medusozoa: {
 		name: "Medusozoa",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"jellyfish"
 		],
@@ -884,7 +877,6 @@ SharkGame.ResourceCategories = {
 
 	molluscs: {
 		name: "Molluscs",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"clam"
 		],
@@ -892,7 +884,6 @@ SharkGame.ResourceCategories = {
 
 	porifera: {
 		name: "Porifera",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"sponge"
 		],
@@ -900,7 +891,6 @@ SharkGame.ResourceCategories = {
 
 	algae: {
 		name: "Algae",
-		disposeMessage: [ "Goodbye" ],
 		resources: [
 			"kelp"
 		],
@@ -908,7 +898,6 @@ SharkGame.ResourceCategories = {
 
     machines: {
         name: "Machines",
-        disposeMessage: ["The stopped machines are left as a home for tinier life." ],
         resources: [
             "crystalMiner",
         ]
@@ -916,16 +905,12 @@ SharkGame.ResourceCategories = {
 
     science: {
         name: "Science",
-        disposeMessage: ["Thousands of sharkhours of research down the drain." ],
         resources: [
             "science"
         ]
     },
     animals: {
         name: "Animals",
-        disposeMessage: [
-            "Sure hope you know what you're doing here."
-        ],
         resources: [
             "fish",
             "seaApple",
@@ -933,16 +918,7 @@ SharkGame.ResourceCategories = {
     },
 
     raw: {
-        name: "Raw resources",
-        disposeMessage: [
-            "The stuff is dumped in some random hole in the ocean.",
-            "We didn't need that anyway. Right? I think we didn't.",
-            "The survey sharks bite up their notes in frustration and begin counting everything all over again.",
-            "Well, someone else can deal with it now.",
-            "We didn't need all of that anyway.",
-            "Do you think the aim of the game is to make the numbers go DOWN?!",
-            "Well I hope you know what you're doing."
-        ],
+        name: "Raw",
         resources: [
             "sand",
             "coral"
@@ -951,9 +927,6 @@ SharkGame.ResourceCategories = {
 
     materials: {
         name: "Materials",
-        disposeMessage: [
-            "Let's hope we don't regret it."
-        ],
         resources: [
             "sharkonium"
         ]
@@ -961,9 +934,6 @@ SharkGame.ResourceCategories = {
 
     harmful: {
         name: "Harmful",
-        disposeMessage: [
-            "Oh, you'd like that, wouldn't you."
-        ],
         resources: [
             "tar",
             "ice"
