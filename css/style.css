@@ -67,6 +67,20 @@ h4 {
   text-align: center;
   text-shadow: 0 0 0.3em #061639;
 }
+
+h5 {
+  float: left;
+  color: #99AACC;
+  margin: 0 0 0 0;
+  font-size: 0.8em;
+  text-align: center;
+  text-shadow: 0 0 0.3em #061639;
+}
+
+h5:hover {
+  color: #CCDDEE;
+}
+
 #shareWrapper {
   margin-left: auto;
   margin-right: auto;
@@ -262,10 +276,40 @@ pre {
   overflow: hidden;
 }
 
+#rhsstatus {
+	min-height: 15em;
+	height: auto;
+}
+
 #sidebar #resourceTableContainer {
   margin-left: auto;
   margin-right: auto;
 }
+
+.horizontal {
+  float: down;
+}
+
+#lhsnavigation {
+  padding: 0.5em 1em 0.5em 2.0em; 
+}
+
+#lhsnavigation h5 {
+  height: 1.0em;
+  text-align:left;
+  margin: 5px;
+}
+
+#rhsnavigation {
+  padding: 0.5em 1em 0.5em 2.0em; 
+}
+
+#rhsnavigation h5 {
+  height: 1.0em;
+  text-align:left;
+  margin: 5px;
+}
+
 #sidebar table {
   margin-left: auto;
   margin-right: auto;

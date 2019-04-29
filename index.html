@@ -40,13 +40,13 @@
     <!-- Cirr's code starts here. I hope you find it insightful if you came here to peer at it,
         but Javascript is hardly my most familiar language. The code here likely stinks. -->
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main_ticker.js"></script>    
     <script type="text/javascript" src="js/util.js"></script>
 
-    <script type="text/javascript" src="js/text/text_resources.js"></script>
+    <script type="text/javascript" src="js/text_resources.js"></script>
 
     <script type="text/javascript" src="js/data/resourcetable.js"></script>
     <script type="text/javascript" src="js/data/resource_decay.js"></script>
-    <script type="text/javascript" src="js/data/homeactions.js"></script>
     <script type="text/javascript" src="js/data/worldtypes.js"></script>
     <script type="text/javascript" src="js/data/upgrades.js"></script>
     <script type="text/javascript" src="js/data/artifacts.js"></script>
@@ -60,6 +60,7 @@
     <script type="text/javascript" src="js/gateway.js"></script>
 
     <script type="text/javascript" src="js/tabs/home.js"></script>
+    <script type="text/javascript" src="js/tabs/home_actions.js"></script>
     <script type="text/javascript" src="js/tabs/lab.js"></script>
     <script type="text/javascript" src="js/tabs/stats.js"></script>
     <script type="text/javascript" src="js/tabs/recycler.js"></script>
@@ -102,12 +103,23 @@
             </div>
         </div>
 		<div id="middlewrapper">
-		    <div id="sidebar">
-		        <div id="status">
-		        </div>
-		    </div>
+			<div id="sidebar">
+					<div id="lhsnavigation">
+						<h5 id="lhs_default_key" style="display: none">default</h5> <h5>inventory</h5> <h5>menu3</h5>
+					</div>
+					<div id="status">
+					</div>
+			</div>
+		</div>
 			<div id="rightsidebar">
-		        <div id="log">
+				<div id="rhswrapper">
+					<div id="rhsnavigation">
+						<h5>view1</h5> <h5>view2</h5> <h5>view3</h5>
+					</div>
+					<div id="rhsstatus">
+					</div>
+					<div id="log">
+					</div>
 		        </div>
 			</div>
 		    <div id="content">

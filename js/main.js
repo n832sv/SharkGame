@@ -293,12 +293,12 @@ SharkGame.Main = {
             SharkGame.GAME_NAME = SharkGame.choose(SharkGame.GAME_NAMES);
             document.title = SharkGame.ACTUAL_GAME_NAME + ": " + SharkGame.GAME_NAME;
         }
-        $('#sidebar').hide();
+        // $('#sidebar').hide();
         var overlay = $('#overlay');
         overlay.hide();
-        $('#gameName').html("- " + SharkGame.GAME_NAME + " -");
+        $('#gameName').html(SharkGame.GAME_NAME);
         $('#versionNumber').html("v " + SharkGame.VERSION + " — " + SharkGame.VERSION_NAME);
-        SharkGame.sidebarHidden = true;
+        // SharkGame.sidebarHidden = true;
         SharkGame.gameOver = false;
 
         // remove any errant classes
@@ -376,41 +376,6 @@ SharkGame.Main = {
 
         if(SharkGame.Main.autosaveHandler === -1) {
             SharkGame.Main.autosaveHandler = setInterval(SharkGame.Main.autosave, SharkGame.Settings.current.autosaveFrequency * 60000);
-        }
-    },
-
-    tick: function() {
-        if(SharkGame.gameOver) {
-            // tick gateway stuff
-            SharkGame.Gateway.update();
-        } else {
-            // tick main game stuff
-            var now = new Date();
-            var elapsedTime = (now.getTime() - SharkGame.before.getTime());
-
-            var r = SharkGame.Resources;
-            var m = SharkGame.Main;
-
-            // check if the sidebar needs to come back
-            if(SharkGame.sidebarHidden) {
-                m.showSidebarIfNeeded();
-            }
-
-            if(elapsedTime > SharkGame.INTERVAL) {
-                // Compensate for lost time.
-                m.processSimTime(SharkGame.dt * (elapsedTime / SharkGame.INTERVAL));
-
-            } else {
-                m.processSimTime(SharkGame.dt);
-            }
-            r.updateResourcesTable();
-
-            var tabCode = SharkGame.Tabs[SharkGame.Tabs.current].code;
-            tabCode.update();
-
-            m.checkTabUnlocks();
-
-            SharkGame.before = new Date();
         }
     },
 

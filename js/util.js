@@ -58,13 +58,13 @@ SharkGame.MathUtil = {
         return 1;
     },
     
-    decay: function (u, n, m, s) {
-		let n = Math.max(0, n-u);
+    decay: function (offset, number, lambda, scale) {
+		let n = Math.max(0, number-offset);
 		let e = Math.E;
 		function cdf (x, l) { return 1 - Math.pow(e, -l * x); };
-		let result = s*cdf(n,m);
+		let result = scale*cdf(n,lambda);
 		return 0 < result && result < n && IsNum(result) ? result : 0; 
-	};
+	}
 };
 
 //linear floor(sqrt(current^2 + current + 2 * price/k + 1/4) - 1/2)

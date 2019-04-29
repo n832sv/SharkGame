@@ -50,7 +50,8 @@ SharkGame.HomeActions = {
         helpText: "Convert ordinary resources into sharkonium, building material of the future!"
     },
 
-    // BUY ANIMALS ////////////////////////////////////////////////////////////////////////////////
+    // Acquire fish 
+    
 
     'getShark': {
         name: "Recruit shark",
@@ -69,36 +70,7 @@ SharkGame.HomeActions = {
             }
         },
         outcomes: [
-            "A bignose shark joins you.",
-            "A blacktip reef shark joins you.",
-            "A blue shark joins you.",
-            "A bull shark joins you.",
-            "A cat shark joins you.",
-            "A crocodile shark joins you.",
-            "A dusky whaler shark joins you.",
-            "A dogfish joins you.",
-            "A graceful shark joins you.",
-            "A grey reef shark joins you.",
-            "A goblin shark joins you.",
-            "A hammerhead shark joins you.",
-            "A hardnose shark joins you.",
-            "A lemon shark joins you.",
-            "A milk shark joins you.",
-            "A nervous shark joins you.",
-            "An oceanic whitetip shark joins you.",
-            "A pigeye shark joins you.",
-            "A sandbar shark joins you.",
-            "A silky shark joins you.",
-            "A silvertip shark joins you.",
-            "A sliteye shark joins you.",
-            "A speartooth shark joins you.",
-            "A spinner shark joins you.",
-            "A spot-tail shark joins you.",
-            "A mako shark joins you.",
-            "A tiger shark joins you.",
-            "A tawny shark joins you.",
-            "A white shark joins you.",
-            "A zebra shark joins you."
+            "A bignose shark joins you."
         ],
         multiOutcomes: [
             "A whole bunch of sharks join you.",

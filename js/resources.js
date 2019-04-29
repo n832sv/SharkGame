@@ -36,6 +36,16 @@ SharkGame.Resources = {
             SharkGame.Resources.changeResource(k, v * timeDelta);
         });
     },
+    
+    process_decays: {
+		/*
+		for,each or something
+		let lambda_scale = SharkGame.decay.get_decay(resource)
+		if (lambda_scale === 0) , next 
+		calculate decay, SharkGame.MathUtils.decay(u, resource_amount, lambda_scale.lambda, lambda_scale.scale)
+		update resource, next
+		*/
+	},
 
     recalculateIncomeTable: function(resources) {
         var r = SharkGame.Resources;

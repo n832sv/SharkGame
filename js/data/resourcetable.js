@@ -909,10 +909,17 @@ SharkGame.ResourceCategories = {
             "science"
         ]
     },
+    
+    fish: {
+		name: "Fish",
+		resources: [
+			"fish",
+			"eel"
+		]
+	},
     animals: {
         name: "Animals",
         resources: [
-            "fish",
             "seaApple",
         ]
     },

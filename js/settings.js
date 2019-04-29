@@ -102,6 +102,7 @@ SharkGame.Settings = {
         }
     },
 
+	/*
     sidebarWidth: {
         defaultSetting: "20%",
         name: "Sidebar Width",
@@ -125,6 +126,7 @@ SharkGame.Settings = {
             }
         }
     },
+    */
 
     showAnimations: {
         defaultSetting: true,
