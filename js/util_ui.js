@@ -1,5 +1,3 @@
-var sharkgame = sharkgame || {};
-
 sharkgame.utilui = {
 
     beautify: function(number, suppressDecimals) {

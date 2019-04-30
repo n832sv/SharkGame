@@ -1,13 +1,13 @@
 sharkgame.main.tick = function() {
 
 	if(sharkgame.gameOver) {
-		sharkgame.Gateway.update();
+		sharkgame.gateway.update();
 	} else {
 
 		// tick main game stuff
 		var now = new Date();
 		var elapsedTime = (now.getTime() - sharkgame.before.getTime());
-		var r = sharkgame.Resources;
+		var r = sharkgame.resources;
 
 
 		// check if the sidebar needs to come back
@@ -15,15 +15,15 @@ sharkgame.main.tick = function() {
 
 		if(elapsedTime > sharkgame.INTERVAL) {
 			// Compensate for lost time.
-			sharkgame.Resources.processIncomes(sharkgame.dt * (elapsedTime / sharkgame.INTERVAL));
+			sharkgame.resources.processIncomes(sharkgame.dt * (elapsedTime / sharkgame.INTERVAL));
 
 		} else {
-			sharkgame.Resources.processIncomes(sharkgame.dt);
+			sharkgame.resources.processIncomes(sharkgame.dt);
 		}
 
-		sharkgame.Resources.updateResourcesTable();
+		sharkgame.resources.updateresourcesTable();
 
-		var tabCode = sharkgame.Tabs[sharkgame.Tabs.current].code;
+		var tabCode = sharkgame.tabs[sharkgame.tabs.current].code;
 		tabCode.update();
 
 		sharkgame.main.checkTabUnlocks();

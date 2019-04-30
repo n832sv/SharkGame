@@ -1,123 +1,19 @@
-var sharkgame = sharkgame || {};
 
-
-// CORE VARIABLES AND HELPER FUNCTIONS
-$.extend(sharkgame, {
-    GAME_NAMES: [
-		"Five Seconds A Shark",
-        "Fin Idle",
-        "Ray of Dreams",
-        "Shark Saver",
-        "Shoal Sharker",
-        "Shark Souls",
-        "Saucy Sharks",
-        "Sharkfall",
-        "Heart of Sharkness",
-        "Sharks and Recreation",
-        "Alone in the Shark",
-        "Sharkpocalypse",
-        "Shark of Darkness",
-        "Strange Oceans"
-    ],
-    GAME_NAME: null,
-    ACTUAL_GAME_NAME: "Shark Game",
-    VERSION: 1.01,
-    VERSION_NAME: "Ocean stranger",
-    EPSILON: 1E-6, // floating point comparison is a joy
-
-    INTERVAL: (1000 / 10), // 20 FPS
-    dt: (1 / 10),
-    before: new Date(),
-
-    timestampLastSave: false,
-    timestampGameStart: false,
-    timestampRunStart: false,
-    timestampRunEnd: false,
-
-    sidebarHidden: true,
-    paneGenerated: false,
-
-    gameOver: false,
-    wonGame: false,
-
-    ending: "<p>Congratulations! You did it.<br/>You saved the sharks!</p>" +
-    "<p>The gate leads away from this strange ocean...</p>" +
-    "<p>Back home to the oceans you came from!</p>" +
-    "<h3>Or are they?</h3>",
-
-    help: "<p>This game is a game about discovery, resources, and does not demand your full attention. " +
-    "You are free to pay as much attention to the game as you want. " +
-    "It will happily run in the background, and works even while closed.</p>" +
-    "<p>To begin, you should catch fish. Once you have some fish, more actions will become available. " +
-    "If you have no idea what these actions do, click the \"Toggle descriptions\" button for more information.</p>" +
-    "<p>If you are ever stuck, try actions you haven't yet tried. " +
-    "Remember, though, that sometimes patience is the only way forward. Patience and ever escalating numbers.</p>",
-
-    spriteIconPath: "img/sharksprites.png",
-    spriteHomeEventPath: "img/sharkeventsprites.png",
-
-    choose: function(choices) {
-        return choices[Math.floor(Math.random() * choices.length)];
-    },
-    log10: function(val) {
-        return Math.log(val) / Math.LN10;
-    },
-    plural: function(number) {
-        return (number === 1) ? "" : "s";
-    },
-
-    getImageIconHTML: function(imagePath, width, height) {
-        if(!imagePath) {
-            imagePath = "http://placekitten.com/g/" + Math.floor(width) + "/" + Math.floor(height);
-        }
-        var imageHtml = "";
-        if(sharkgame.Settings.current.iconPositions !== "off") {
-            imageHtml += "<img width=" + width + " height=" + height + " src='" + imagePath + "' class='button-icon-" + sharkgame.Settings.current.iconPositions + "'>";
-        }
-        return imageHtml;
-    },
-    changeSprite: function(spritePath, imageName, imageDiv, backupImageName) {
-        var spriteData = sharkgame.Sprites[imageName];
-        if(!imageDiv) {
-            imageDiv = $('<div>');
-        }
-
-        // if the original sprite data is undefined, try loading the backup
-        if(!spriteData) {
-            spriteData = sharkgame.Sprites[backupImageName];
-        }
-
-        if(spriteData) {
-            imageDiv.css('background-image', 'url(' + spritePath + ')');
-            //imageDiv.css('background-position', "-" + spriteData.frame.x + "px -" + spriteData.frame.y + "px");
-            imageDiv.css('background-position', "-" + spriteData.frame.x + "px -" + spriteData.frame.y + "px");
-            imageDiv.width(spriteData.frame.w);
-            imageDiv.height(spriteData.frame.h);
-        } else {
-            imageDiv.css('background-image', 'url("//placehold.it/50x50")');
-            imageDiv.width(50);
-            imageDiv.height(50);
-        }
-        return imageDiv;
-    }
-
-});
-
-sharkgame.TitleBar = {
+sharkgame.titlebar = {
     saveLink: {
         name: "save",
         main: true,
         onClick: function() {
             try {
                 try {
-                    sharkgame.Save.saveGame();
+                    sharkgame.save.saveGame();
                 } catch(err) {
-                    sharkgame.Log.addError(err);
+                    sharkgame.log.addError(err);
                     console.log(err);
                 }
-                sharkgame.Log.addMessage("Saved game.");
+                sharkgame.log.addMessage("saved game.");
             } catch(err) {
-                sharkgame.Log.addError(err.message);
+                sharkgame.log.addError(err.message);
             }
 
         }
@@ -158,7 +54,7 @@ sharkgame.TitleBar = {
     }
 };
 
-sharkgame.Tabs = {
+sharkgame.tabs = {
     current: 'home'
 };
 
@@ -193,65 +89,64 @@ sharkgame.main = {
         overlay.removeClass("gateway");
 
         // initialise timestamps to something sensible
-        sharkgame.timestampLastSave = sharkgame.timestampLastSave || currDate.getTime();
+        sharkgame.timestampLastsave = sharkgame.timestampLastsave || currDate.getTime();
         sharkgame.timestampGameStart = sharkgame.timestampGameStart || currDate.getTime();
         sharkgame.timestampRunStart = sharkgame.timestampRunStart || currDate.getTime();
 
         // preserve settings or set defaults
-        $.each(sharkgame.Settings, function(k, v) {
+        $.each(sharkgame.settings, function(k, v) {
             if(k === "current") {
                 return;
             }
-            var currentSetting = sharkgame.Settings.current[k];
+            var currentSetting = sharkgame.settings.current[k];
             if(typeof(currentSetting) === "undefined") {
-                sharkgame.Settings.current[k] = v.defaultSetting
+                sharkgame.settings.current[k] = v.defaultSetting
             }
         });
 
         // initialise and reset resources
-        sharkgame.Resources.init();
+        sharkgame.resources.init();
 
         // initialise world
-        // MAKE SURE GATE IS INITIALISED AFTER WORLD!!
-        sharkgame.World.init();
-        sharkgame.World.apply();
+        // MAKE SURE gate IS INITIALISED AFTER world!!
+        sharkgame.world.init();
+        sharkgame.world.apply();
 
-        sharkgame.Gateway.init();
-        sharkgame.Gateway.applyArtifacts(); // if there's any effects to carry over from a previous run
+        sharkgame.gateway.init();
+        sharkgame.gateway.applyArtifacts(); // if there's any effects to carry over from a previous run
 
         // reset log
-        sharkgame.Log.clearMessages();
+        sharkgame.log.clearMessages();
 
         // initialise tabs
-        sharkgame.Home.init();
-        sharkgame.Lab.init();
-        sharkgame.Stats.init();
-        sharkgame.Recycler.init();
-        sharkgame.Gate.init();
-        sharkgame.Reflection.init();
+        sharkgame.home.init();
+        sharkgame.lab.init();
+        sharkgame.stats.init();
+        sharkgame.gate.init();
+        sharkgame.reflection.init();
 
-        sharkgame.ui.setUpTitleBar();
+        sharkgame.ui.setUptitlebar();
 
-        sharkgame.Tabs.current = "home";
+        sharkgame.tabs.current = "home";
 
         // load save game data if present
-        if(sharkgame.Save.savedGameExists()) {
+        if(sharkgame.save.savedGameExists()) {
             try{
-                sharkgame.Save.loadGame();
-                sharkgame.Log.addMessage("Loaded game.");
+                sharkgame.save.loadGame();
+                sharkgame.log.addMessage("Loaded game.");
             } catch(err) {
-                sharkgame.Log.addError(err.message);
+                sharkgame.log.addError(err.message);
             }
         }
 
         // rename a game option if this is a first time run
         if(sharkgame.main.isFirstTime()) {
-            sharkgame.TitleBar.skipLink.name = "reset";
-            sharkgame.ui.setUpTitleBar();
+            sharkgame.titlebar.skipLink.name = "reset";
+            sharkgame.ui.setUptitlebar();
         }
 
         // discover actions that were present in last save
-        sharkgame.Home.discoverActions();
+        sharkgame.home.discoverActions();
 
         // set up tab after load
         sharkgame.ui.setUpTab();
@@ -262,12 +157,12 @@ sharkgame.main = {
         }
 
         if(sharkgame.main.autosaveHandler === -1) {
-            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.Settings.current.autosaveFrequency * 60000);
+            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.settings.current.autosaveFrequency * 60000);
         }
     },
 
     checkTabUnlocks: function() {
-        $.each(sharkgame.Tabs, function(k, v) {
+        $.each(sharkgame.tabs, function(k, v) {
             if(k === "current" || v.discovered) {
                 return;
             }
@@ -275,14 +170,14 @@ sharkgame.main = {
 
             // check resources
             if(v.discoverReq.resource) {
-                reqsMet = reqsMet && sharkgame.Resources.checkResources(v.discoverReq.resource, true);
+                reqsMet = reqsMet && sharkgame.resources.checkresources(v.discoverReq.resource, true);
             }
 
             // check upgrades
             if(v.discoverReq.upgrade) {
                 $.each(v.discoverReq.upgrade, function(_, value) {
-                    if(sharkgame.Upgrades[value]) {
-                        reqsMet = reqsMet && sharkgame.Upgrades[value].purchased;
+                    if(sharkgame.upgrades[value]) {
+                        reqsMet = reqsMet && sharkgame.upgrades[value].purchased;
                     } else {
                         reqsMet = false; // can't have a nonexistent upgrade
                     }
@@ -292,13 +187,13 @@ sharkgame.main = {
             if(reqsMet) {
                 // unlock tab!
                 sharkgame.ui.discoverTab(k);
-                sharkgame.Log.addDiscovery("Discovered " + v.name + "!");
+                sharkgame.log.addDiscovery("Discovered " + v.name + "!");
             }
         });
     },
 
     processSimTime: function(numberOfSeconds) {
-        var r = sharkgame.Resources;
+        var r = sharkgame.resources;
 
         // income calculation
         r.processIncomes(numberOfSeconds);
@@ -306,22 +201,22 @@ sharkgame.main = {
 
     autosave: function() {
         try {
-            sharkgame.Save.saveGame();
-            sharkgame.Log.addMessage("Autosaved.");
+            sharkgame.save.saveGame();
+            sharkgame.log.addMessage("Autosaved.");
         } catch(err) {
-            sharkgame.Log.addError(err.message);
+            sharkgame.log.addError(err.message);
             console.log(err.trace);
         }
     },
 
     onOptionClick: function() {
-        var buttonLabel = $(this).attr("id");
-        var settingInfo = buttonLabel.split("-");
+        var buttonlabel = $(this).attr("id");
+        var settingInfo = buttonlabel.split("-");
         var settingName = settingInfo[1];
         var optionIndex = parseInt(settingInfo[2]);
 
         // change setting to specified setting!
-        sharkgame.Settings.current[settingName] = sharkgame.Settings[settingName].options[optionIndex];
+        sharkgame.settings.current[settingName] = sharkgame.settings[settingName].options[optionIndex];
 
         // update relevant table cell!
 //        $('#option-' + settingName)
@@ -334,10 +229,10 @@ sharkgame.main = {
         $(this).attr("disabled", "true");
 
         // if there is a callback, call it, else call the no op
-        (sharkgame.Settings[settingName].onChange || $.noop)();
+        (sharkgame.settings[settingName].onChange || $.noop)();
     },
 
-    endGame: function(loadingFromSave) {
+    endGame: function(loadingFromsave) {
         // stop autosaving
         clearInterval(sharkgame.main.autosaveHandler);
         sharkgame.main.autosaveHandler = -1;
@@ -349,13 +244,13 @@ sharkgame.main = {
         sharkgame.timestampRunEnd = (new Date()).getTime();
 
         // kick over to passage
-        sharkgame.Gateway.enterGate(loadingFromSave);
+        sharkgame.gateway.entergate(loadingFromsave);
     },
 
     purgeGame: function() {
         // empty out all the containers!
         $('#status').empty();
-        sharkgame.Log.clearMessages();
+        sharkgame.log.clearMessages();
         $('#content').empty();
     },
 
@@ -368,38 +263,38 @@ sharkgame.main = {
             // copy over all special category resources
             // artifacts are preserved automatically within gateway file
             var backup = {};
-            _.each(sharkgame.ResourceCategories.special.resources, function(resourceName) {
-                backup[resourceName] = {amount: sharkgame.Resources.getResource(resourceName), totalAmount: sharkgame.Resources.getTotalResource(resourceName)};
+            _.each(sharkgame.resourcecategories.special.resources, function(resourceName) {
+                backup[resourceName] = {amount: sharkgame.resources.getResource(resourceName), totalAmount: sharkgame.resources.getTotalResource(resourceName)};
             });
 
-            sharkgame.Save.deleteSave(); // otherwise it will be loaded during main init and fuck up everything!!
+            sharkgame.save.deletesave(); // otherwise it will be loaded during main init and fuck up everything!!
             sharkgame.main.init();
-            sharkgame.Log.addMessage(sharkgame.World.getWorldEntryMessage());
+            sharkgame.log.addMessage(sharkgame.world.getworldEntryMessage());
 
             // restore special resources
             $.each(backup, function(resourceName, resourceData) {
-                sharkgame.Resources.setResource(resourceName, resourceData.amount);
-                sharkgame.Resources.setTotalResource(resourceName, resourceData.totalAmount);
+                sharkgame.resources.setResource(resourceName, resourceData.amount);
+                sharkgame.resources.setTotalResource(resourceName, resourceData.totalAmount);
             });
 
             sharkgame.timestampRunStart = (new Date()).getTime();
             try {
-                sharkgame.Save.saveGame();
-                sharkgame.Log.addMessage("Game saved.");
+                sharkgame.save.saveGame();
+                sharkgame.log.addMessage("Game saved.");
             } catch(err) {
-                sharkgame.Log.addError(err.message);
+                sharkgame.log.addError(err.message);
                 console.log(err.trace);
             }
         }
     },
 
     isFirstTime: function() {
-        return sharkgame.World.worldType === "start" && !(sharkgame.Resources.getTotalResource("essence") > 0);
+        return sharkgame.world.worldType === "start" && !(sharkgame.resources.getTotalResource("essence") > 0);
     },
 
     // DEBUG FUNCTIONS
     discoverAll: function() {
-        $.each(sharkgame.Tabs, function(k, v) {
+        $.each(sharkgame.tabs, function(k, v) {
             if(k !== "current") {
                 sharkgame.main.discoverTab(k);
             }
@@ -418,7 +313,7 @@ $(document).ready(function() {
             switch (String.fromCharCode(event.which).toLowerCase()) {
                 case 's':
                     event.preventDefault();
-                    sharkgame.Save.saveGame();
+                    sharkgame.save.saveGame();
                     break;
                 case 'o':
                     event.preventDefault();

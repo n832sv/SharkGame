@@ -1,4 +1,4 @@
-sharkgame.ResourceTable = {
+sharkgame.resourcetable = {
 
     // SPECIAL
 
@@ -17,6 +17,14 @@ sharkgame.ResourceTable = {
         color: '#ACE3D1',
         value: -1
     },
+    
+    prowess: {
+		name: 'prowess',
+		singleName: 'prowess',
+		//desc
+		color: '#6020B0',
+		value: -1
+	},
 
     // FRENZY
 
@@ -26,11 +34,12 @@ sharkgame.ResourceTable = {
         //desc: "Apex predators of the seas.",
         color: '#92C1E0',
         income: {
-            'fish': 1
+			"prowess": 0.001
         },
+        upkeep: {
+			"fish": 0.10
+		},
         jobs: [
-            "scientist",
-            "nurse"
         ],
         value: 1000
     },
@@ -820,12 +829,13 @@ sharkgame.ResourceTable = {
 
 };
 
-sharkgame.ResourceCategories = {
+sharkgame.resourcecategories = {
     special: {
         name: "Special",
         resources: [
             "numen",
-            "essence"
+            "essence",
+            "prowess"
         ]
     },
 

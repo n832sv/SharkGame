@@ -1,20 +1,20 @@
-sharkgame.Log = {
+sharkgame.log = {
 
     initialised: false,
     messages: [],
 
     init: function() {
-        var l = sharkgame.Log;
+        var l = sharkgame.log;
         // create log
-        $('#log').append("<button id='clearLog' class='min'></button><h3>Log<h3/><ul id='messageList'></ul>");
+        $('#log').append("<button id='clearlog' class='min'></button><h3>log<h3/><ul id='messageList'></ul>");
         // add clear button
-        sharkgame.ui.replaceButton("clearLog", "&nbsp x &nbsp", l.clearMessages);
+        sharkgame.ui.replaceButton("clearlog", "&nbsp x &nbsp", l.clearMessages);
         l.initialised = true;
     },
 
     addMessage: function(message) {
-        var l = sharkgame.Log;
-        var s = sharkgame.Settings.current;
+        var l = sharkgame.log;
+        var s = sharkgame.settings.current;
         var showAnims = s.showAnimations;
 
         if(!l.initialised) {
@@ -34,29 +34,29 @@ sharkgame.Log = {
         }
         l.messages.push(messageItem);
 
-        sharkgame.Log.correctLogLength();
+        sharkgame.log.correctlogLength();
 
         return messageItem;
     },
 
     addError: function(message) {
-        var l = sharkgame.Log;
+        var l = sharkgame.log;
         var messageItem = l.addMessage("Error: " + message);
         messageItem.addClass("error");
         return messageItem;
     },
 
     addDiscovery: function(message) {
-        var l = sharkgame.Log;
+        var l = sharkgame.log;
         var messageItem = l.addMessage(message);
         messageItem.addClass("discovery");
         return messageItem;
     },
 
-    correctLogLength: function() {
-        var l = sharkgame.Log;
-        var showAnims = sharkgame.Settings.current.showAnimations;
-        var logMax = sharkgame.Settings.current.logMessageMax;
+    correctlogLength: function() {
+        var l = sharkgame.log;
+        var showAnims = sharkgame.settings.current.showAnimations;
+        var logMax = sharkgame.settings.current.logMessageMax;
 
         if(l.messages.length >= logMax) {
             while(l.messages.length > logMax) {
@@ -76,7 +76,7 @@ sharkgame.Log = {
     },
 
     clearMessages: function() {
-        var l = sharkgame.Log;
+        var l = sharkgame.log;
         // remove each element from page
         $.each(l.messages, function(_, v) {
             v.remove();
@@ -86,6 +86,6 @@ sharkgame.Log = {
     },
 
     haveAnyMessages: function() {
-        return sharkgame.Log.messages.length > 0;
+        return sharkgame.log.messages.length > 0;
     }
 };

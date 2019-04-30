@@ -281,7 +281,7 @@ pre {
 	height: auto;
 }
 
-#sidebar #resourceTableContainer {
+#sidebar #resourcetableContainer {
   margin-left: auto;
   margin-right: auto;
 }
@@ -463,37 +463,37 @@ button.newlyDiscovered div.tint:before {
  width: 6em !important;
  max-width: 30em;
 }
-#homeTabs {
+#hometabs {
   margin-bottom: 1em;
 }
-#homeTabs ul {
+#hometabs ul {
   padding: 0;
   margin: 0;
 }
-#homeTabs li {
+#hometabs li {
   font-weight: bold;
   list-style-type: none;
   display: inline;
 }
-#homeTabs li:before {
+#hometabs li:before {
   content: " | ";
 }
-#homeTabs li:first-child:before {
+#hometabs li:first-child:before {
   content: none;
 }
-#homeTabs .newItemAdded a:link {
+#hometabs .newItemAdded a:link {
   color: #ace3d1;
   text-shadow: 0 0 0.8em #73d0b1;
 }
-#homeTabs .newItemAdded a:visited {
+#hometabs .newItemAdded a:visited {
   color: #ace3d1;
   text-shadow: 0 0 0.8em #73d0b1;
 }
-#homeTabs .newItemAdded a:hover {
+#hometabs .newItemAdded a:hover {
   color: #d2f0e6;
   text-shadow: 0 0 0.8em #99ddc6;
 }
-#homeTabs .newItemAdded a:active {
+#hometabs .newItemAdded a:active {
   color: #d2f0e6;
   text-shadow: 0 0 0.8em #99ddc6;
 }
@@ -570,7 +570,7 @@ button.newlyDiscovered div.tint:before {
   text-shadow: 0 0 1em #ace3d1;
   background: #152a55;
 }
-#generalStats .timeDisplay {
+#generalstats .timeDisplay {
   font-style: italic;
   font-size: 110%;
 }
@@ -769,7 +769,7 @@ button:disabled div {
   background: rgba(6, 22, 57, 0.8);
   pointer-events: none;
 }
-#tabSceneImage {
+#tabsceneImage {
   vertical-align: middle;
   display: block;
   margin: 0.1em auto 0.4em auto;
@@ -780,7 +780,7 @@ button:disabled div {
   -moz-box-shadow: 0 0 5px 5px #152a55;
   box-shadow: 0 0 5px 5px #152a55;
 }
-#tabSceneImageRed {
+#tabsceneImageRed {
   vertical-align: middle;
   display: block;
   margin: 0.1em auto 0.4em auto;
@@ -794,7 +794,7 @@ button:disabled div {
   -moz-box-shadow: 0 0 5px 5px #5c1919;
   box-shadow: 0 0 5px 5px #5c1919;
 }
-#tabSceneImageEssence {
+#tabsceneImageEssence {
   vertical-align: middle;
   display: block;
   margin: 0.1em auto 0.4em auto;
@@ -910,7 +910,7 @@ button:disabled div {
 #pane #changelogDiv h3 {
   text-align: left;
 }
-#pane td.optionLabel {
+#pane td.optionlabel {
   min-width: 12em;
   word-wrap: break-word;
 }

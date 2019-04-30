@@ -1,4 +1,4 @@
-sharkgame.Upgrades = {
+sharkgame.upgrades = {
     crystalBite: {
         name: "Crystal Bite-Gear",
         desc: "Bite the crystals we have into something to help biting!",

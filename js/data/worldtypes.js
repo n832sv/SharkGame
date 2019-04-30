@@ -1,11 +1,11 @@
-sharkgame.WorldTypes = {
+sharkgame.worldtypes = {
     test: {
         name: "Test",
         desc: "You REALLY shouldn't be seeing this.",
         shortDesc: "testing",
         entry: "You enter a debug ocean.",
         style: "default",
-        absentResources: [],
+        absentresources: [],
         modifiers: [],
         gateCosts: {
             fish: 1E3,
@@ -17,12 +17,12 @@ sharkgame.WorldTypes = {
         }
     },
     start: {
-        name: "Home",
+        name: "home",
         desc: "You shouldn't be seeing this.",
         shortDesc: "strange blue",
         entry: "You enter a familiar blue sea, all your previous knowledge a dim memory.",
         style: "default",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "shrimp",
@@ -84,7 +84,7 @@ sharkgame.WorldTypes = {
         shortDesc: "strange blue",
         entry: "You enter a familiar blue sea, all your previous knowledge a dim memory.",
         style: "default",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -110,7 +110,7 @@ sharkgame.WorldTypes = {
         shortDesc: "swirling teal",
         entry: "You enter a chaotic fray, with no recollection of your former journey. New creatures charge at you from all directions.",
         style: "chaotic",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -140,7 +140,7 @@ sharkgame.WorldTypes = {
         shortDesc: "thriving aquamarine",
         entry: "Remembering nothing, you find yourself in a beautiful atoll teeming with life. Life will be good here.",
         style: "haven",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -166,7 +166,7 @@ sharkgame.WorldTypes = {
         shortDesc: "stormy grey",
         entry: "You recall nothing and know only the storms. The unrelenting, restless storms scattering your possessions and allies.",
         style: "tempestuous",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -193,7 +193,7 @@ sharkgame.WorldTypes = {
         shortDesc: "searing red",
         entry: "The burning waters sear the last traces of your past experiences from you. From beneath, the vents spew forth a heavy cloud of sand.",
         style: "violent",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -224,7 +224,7 @@ sharkgame.WorldTypes = {
         shortDesc: "murky dark green",
         entry: "You do not know who left this world so torn and empty. Was it some predecessor of yours? Was it you yourself?",
         style: "abandoned",
-        absentResources: [
+        absentresources: [
             "ice",
             "heater",
             "shrimp",
@@ -236,10 +236,10 @@ sharkgame.WorldTypes = {
         ],
         modifiers: [
             { modifier: "planetaryIncome", resource: "tar", amount: 0.1 },
-            { modifier: "planetaryStartingResources", resource: "crystalMiner", amount: 1 },
-            { modifier: "planetaryStartingResources", resource: "sandDigger", amount: 1 },
-            { modifier: "planetaryStartingResources", resource: "fishMachine", amount: 1 },
-            { modifier: "planetaryStartingResources", resource: "silentArchivist", amount: 1 }
+            { modifier: "planetaryStartingresources", resource: "crystalMiner", amount: 1 },
+            { modifier: "planetaryStartingresources", resource: "sandDigger", amount: 1 },
+            { modifier: "planetaryStartingresources", resource: "fishMachine", amount: 1 },
+            { modifier: "planetaryStartingresources", resource: "silentArchivist", amount: 1 }
         ],
         gateCosts: {
             junk: 1E8,
@@ -256,7 +256,7 @@ sharkgame.WorldTypes = {
         shortDesc: "dark mysterious",
         entry: "Blackness. You know only blindness in these dark forsaken waters. Foggy memory leads you to follow a stream of crystals.",
         style: "shrouded",
-        absentResources: [
+        absentresources: [
             "tar",
             "ice",
             "heater",
@@ -288,7 +288,7 @@ sharkgame.WorldTypes = {
         shortDesc: "freezing white",
         entry: "As you struggle with sudden amnesia, you notice crystals forming in front of you. So cold.",
         style: "frigid",
-        absentResources: [
+        absentresources: [
             "tar",
             "dolphin",
             "whale",

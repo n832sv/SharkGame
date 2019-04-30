@@ -1,8 +1,8 @@
-sharkgame.Home = {
+sharkgame.home = {
 
     tabId: "home",
     tabDiscovered: true,
-    tabName: "Home Sea",
+    tabName: "home Sea",
     tabBg: "img/bg/bg-homesea.png",
 
     currentButtonTab: null,
@@ -11,21 +11,21 @@ sharkgame.Home = {
     // Priority: later messages display if available, otherwise earlier ones.
 
     init: function() {
-        var h = sharkgame.Home;
+        var h = sharkgame.home;
 
         // rename home tab
-        var tabName = sharkgame.WorldTypes[sharkgame.World.worldType].name + " Ocean";
-        sharkgame.Home.tabName = tabName;
+        var tabName = sharkgame.worldtypes[sharkgame.world.worldType].name + " Ocean";
+        sharkgame.home.tabName = tabName;
 
         // register tab
-        sharkgame.Tabs[h.tabId] = {
+        sharkgame.tabs[h.tabId] = {
             id: h.tabId,
             name: h.tabName,
             discovered: h.tabDiscovered,
             code: h
         };
         // populate action discoveries
-        $.each(sharkgame.HomeActions, function(actionName, actionData) {
+        $.each(sharkgame.homeactions, function(actionName, actionData) {
             actionData.discovered = false;
             actionData.newlyDiscovered = false;
         });
@@ -35,16 +35,16 @@ sharkgame.Home = {
     },
 
     switchTo: function() {
-        var h = sharkgame.Home;
+        var h = sharkgame.home;
         var content = $('#content');
         var tabMessage = $('<div>').attr("id", "tabMessage");
         content.append(tabMessage);
         h.currentExtraMessageIndex = -1;
         h.updateMessage(true);
         // button tabs
-        var buttonTabDiv = $('<div>').attr("id", "homeTabs");
+        var buttonTabDiv = $('<div>').attr("id", "hometabs");
         content.append(buttonTabDiv);
-        h.createButtonTabs();
+        h.createButtontabs();
         // help button
 		/*
         var helpButtonDiv = $('<div>');
@@ -55,42 +55,42 @@ sharkgame.Home = {
         // button list
         var buttonList = $('<div>').attr("id", "buttonList");
         content.append(buttonList);
-        if(sharkgame.Settings.current.buttonDisplayType === "pile") {
+        if(sharkgame.settings.current.buttonDisplayType === "pile") {
             buttonList.addClass("pileArrangement");
         } else {
             buttonList.removeClass("pileArrangement");
         }
         // background art!
-        if(sharkgame.Settings.current.showTabImages) {
+        if(sharkgame.settings.current.showTabImages) {
             tabMessage.css("background-image", "url('" + h.tabBg + "')");
         }
     },
 
     discoverActions: function() {
-        var h = sharkgame.Home;
-        $.each(sharkgame.HomeActions, function(actionName, actionData) {
+        var h = sharkgame.home;
+        $.each(sharkgame.homeactions, function(actionName, actionData) {
             actionData.discovered = h.areActionPrereqsMet(actionName);
             actionData.newlyDiscovered = false;
         });
     },
 
-    createButtonTabs: function() {
-        var buttonTabDiv = $('#homeTabs');
-        var buttonTabList = $('<ul>').attr("id", "homeTabsList");
+    createButtontabs: function() {
+        var buttonTabDiv = $('#hometabs');
+        var buttonTabList = $('<ul>').attr("id", "hometabsList");
         buttonTabDiv.empty();
         var tabAmount = 0;
 
         // add a header for each discovered category
         // make it a link if it's not the current tab
-        $.each(sharkgame.HomeActionCategories, function(k, v) {
-            var onThisTab = (sharkgame.Home.currentButtonTab === k);
+        $.each(sharkgame.homeactioncategories, function(k, v) {
+            var onThisTab = (sharkgame.home.currentButtonTab === k);
 
             var categoryDiscovered = false;
             if(k === "all") {
                 categoryDiscovered = true;
             } else {
                 $.each(v.actions, function(_, actionName) {
-                    categoryDiscovered = categoryDiscovered || sharkgame.HomeActions[actionName].discovered;
+                    categoryDiscovered = categoryDiscovered || sharkgame.homeactions[actionName].discovered;
                 });
             }
 
@@ -105,7 +105,7 @@ sharkgame.Home = {
                             .html(v.name)
                             .click(function() {
                                 var tab = ($(this).attr("id")).split("-")[1];
-                                sharkgame.Home.changeButtonTab(tab);
+                                sharkgame.home.changeButtonTab(tab);
                             })
                     );
                     if(v.hasNewItem) {
@@ -125,36 +125,36 @@ sharkgame.Home = {
 
     updateTab: function(tabToUpdate) {
         // return if we're looking at all buttons, no change there
-        if(sharkgame.Home.currentButtonTab === "all") {
+        if(sharkgame.home.currentButtonTab === "all") {
             return;
         }
-        sharkgame.HomeActionCategories[tabToUpdate].hasNewItem = true;
+        sharkgame.homeactioncategories[tabToUpdate].hasNewItem = true;
         var tabItem = $('#buttonTab-' + tabToUpdate);
         if(tabItem.length > 0) {
             tabItem.parent().addClass("newItemAdded");
         } else {
-            sharkgame.Home.createButtonTabs();
+            sharkgame.home.createButtontabs();
         }
     },
 
     changeButtonTab: function(tabToChangeTo) {
-        var h = sharkgame.Home;
-        sharkgame.HomeActionCategories[tabToChangeTo].hasNewItem = false;
+        var h = sharkgame.home;
+        sharkgame.homeactioncategories[tabToChangeTo].hasNewItem = false;
         if(tabToChangeTo === "all") {
-            $.each(sharkgame.HomeActionCategories, function(k, v) {
+            $.each(sharkgame.homeactioncategories, function(k, v) {
                 v.hasNewItem = false;
             })
         }
         h.currentButtonTab = tabToChangeTo;
         $('#buttonList').empty();
-        h.createButtonTabs();
+        h.createButtontabs();
     },
 
     updateMessage: function(suppressAnimation) {
-        var h = sharkgame.Home;
-        var r = sharkgame.Resources;
-        var u = sharkgame.Upgrades;
-        var wi = sharkgame.WorldTypes[sharkgame.World.worldType];
+        var h = sharkgame.home;
+        var r = sharkgame.resources;
+        var u = sharkgame.upgrades;
+        var wi = sharkgame.worldtypes[sharkgame.world.worldType];
         var selectedIndex = h.currentExtraMessageIndex;
         $.each(sharkgame.text.extra_messages, function(i, v) {
             var showThisMessage = true;
@@ -171,7 +171,7 @@ sharkgame.Home = {
                     });
                 }
                 if(v.unlock.world) {
-                    showThisMessage = showThisMessage && sharkgame.World.worldType === v.unlock.world;
+                    showThisMessage = showThisMessage && sharkgame.world.worldType === v.unlock.world;
                 }
             }
             if(showThisMessage) {
@@ -182,10 +182,10 @@ sharkgame.Home = {
         if(h.currentExtraMessageIndex !== selectedIndex) {
             h.currentExtraMessageIndex = selectedIndex;
             var tabMessage = $('#tabMessage');
-            if(sharkgame.Settings.current.showTabImages) {
-                var sceneDiv = $('#tabSceneImage');
+            if(sharkgame.settings.current.showTabImages) {
+                var sceneDiv = $('#tabsceneImage');
                 if(sceneDiv.size() === 0) {
-                    sceneDiv = $('<div>').attr("id", "tabSceneImage");
+                    sceneDiv = $('<div>').attr("id", "tabsceneImage");
                 }
             }
             var message = "You are a shark in a " + wi.shortDesc + " sea.";
@@ -193,35 +193,35 @@ sharkgame.Home = {
             tabMessage.html(message).prepend(sceneDiv);
 
             var extraMessageSel = $('#extraMessage');
-            if(!suppressAnimation && sharkgame.Settings.current.showAnimations) {
+            if(!suppressAnimation && sharkgame.settings.current.showAnimations) {
                 extraMessageSel.animate({opacity: 0}, 200, function() {
                     var thisSel = $(this);
                     thisSel.animate({opacity: 1}, 200).html(sharkgame.text.extra_messages[selectedIndex].message);
                 });
                 sceneDiv.animate({opacity: 0}, 500, function() {
                     var thisSel = $(this);
-                    if(sharkgame.Settings.current.showTabImages) {
-                        sharkgame.changeSprite(sharkgame.spriteHomeEventPath, "homesea-" + (selectedIndex + 1), sceneDiv, "homesea-missing");
+                    if(sharkgame.settings.current.showTabImages) {
+                        sharkgame.ui.changeSprite(sharkgame.spritehomeEventPath, "homesea-" + (selectedIndex + 1), sceneDiv, "homesea-missing");
                     }
                     thisSel.animate({opacity: 1}, 500);
                 });
             } else {
                 extraMessageSel.html(sharkgame.text.extra_messages[selectedIndex].message);
-                if(sharkgame.Settings.current.showTabImages) {
-                    sharkgame.changeSprite(sharkgame.spriteHomeEventPath, "homesea-" + (selectedIndex + 1), sceneDiv, "homesea-missing");
+                if(sharkgame.settings.current.showTabImages) {
+                    sharkgame.ui.changeSprite(sharkgame.spritehomeEventPath, "homesea-" + (selectedIndex + 1), sceneDiv, "homesea-missing");
                 }
             }
         }
     },
 
     update: function() {
-        var h = sharkgame.Home;
-        var r = sharkgame.Resources;
-        var w = sharkgame.World;
+        var h = sharkgame.home;
+        var r = sharkgame.resources;
+        var w = sharkgame.world;
 
 
         // for each button entry in the home tab,
-        $.each(sharkgame.HomeActions, function(actionName, actionData) {
+        $.each(sharkgame.homeactions, function(actionName, actionData) {
             var actionTab = h.getActionCategory(actionName);
             var onTab = (actionTab === h.currentButtonTab) || (h.currentButtonTab === "all");
             if(onTab) {
@@ -254,12 +254,12 @@ sharkgame.Home = {
     },
 
     updateButton: function(actionName) {
-        var h = sharkgame.Home;
-        var r = sharkgame.Resources;
-        var amountToBuy = sharkgame.Settings.current.buyAmount;
+        var h = sharkgame.home;
+        var r = sharkgame.resources;
+        var amountToBuy = sharkgame.settings.current.buyAmount;
 
         var button = $('#' + actionName);
-        var actionData = sharkgame.HomeActions[actionName];
+        var actionData = sharkgame.homeactions[actionName];
 
         var amount = amountToBuy;
         var actionCost;
@@ -279,7 +279,7 @@ sharkgame.Home = {
         if($.isEmptyObject(actionCost)) {
             enableButton = true; // always enable free buttons
         } else {
-            enableButton = r.checkResources(actionCost);
+            enableButton = r.checkresources(actionCost);
         }
 
         var label = actionData.name;
@@ -303,7 +303,7 @@ sharkgame.Home = {
             }
         }
 
-        if(sharkgame.Settings.current.showTabHelp) {
+        if(sharkgame.settings.current.showTabHelp) {
             if(actionData.helpText) {
                 label += "<br><span class='medDesc'>" + actionData.helpText + "</span>";
             }
@@ -313,10 +313,10 @@ sharkgame.Home = {
 
 
         var spritename = "actions/" + actionName;
-        if(sharkgame.Settings.current.iconPositions !== "off") {
-            var iconDiv = sharkgame.changeSprite(sharkgame.spriteIconPath, spritename, null, "general/missing-action");
+        if(sharkgame.settings.current.iconPositions !== "off") {
+            var iconDiv = sharkgame.ui.changeSprite(sharkgame.spriteIconPath, spritename, null, "general/missing-action");
             if(iconDiv) {
-                iconDiv.addClass("button-icon-" + sharkgame.Settings.current.iconPositions);
+                iconDiv.addClass("button-icon-" + sharkgame.settings.current.iconPositions);
                 if(!enableButton) {
                     button.prepend($('<div>').append(iconDiv).addClass("tint"));
                 } else {
@@ -327,13 +327,13 @@ sharkgame.Home = {
     },
 
     areActionPrereqsMet: function(actionName) {
-        var r = sharkgame.Resources;
-        var w = sharkgame.World;
+        var r = sharkgame.resources;
+        var w = sharkgame.world;
         var prereqsMet = true; // assume true until proven false
-        var action = sharkgame.HomeActions[actionName];
+        var action = sharkgame.homeactions[actionName];
         // check resource prerequisites
         if(action.prereq.resource) {
-            prereqsMet = prereqsMet && r.checkResources(action.prereq.resource, true);
+            prereqsMet = prereqsMet && r.checkresources(action.prereq.resource, true);
         }
         // check if resource cost exists
         if(action.cost) {
@@ -349,7 +349,7 @@ sharkgame.Home = {
         // check upgrade prerequisites
         if(action.prereq.upgrade) {
             $.each(action.prereq.upgrade, function(_, v) {
-                prereqsMet = prereqsMet && sharkgame.Upgrades[v].purchased;
+                prereqsMet = prereqsMet && sharkgame.upgrades[v].purchased;
             });
         }
         // check if resulting resource exists
@@ -362,13 +362,13 @@ sharkgame.Home = {
     },
 
     addButton: function(actionName) {
-        var h = sharkgame.Home;
+        var h = sharkgame.home;
         var buttonListSel = $('#buttonList');
-        var actionData = sharkgame.HomeActions[actionName];
+        var actionData = sharkgame.homeactions[actionName];
 
-        var buttonSelector = sharkgame.ui.makeButton(actionName, actionData.name, buttonListSel, h.onHomeButton, "buttonhome");
+        var buttonSelector = sharkgame.ui.makeButton(actionName, actionData.name, buttonListSel, h.onhomeButton, "buttonhome");
         h.updateButton(actionName);
-        if(sharkgame.Settings.current.showAnimations) {
+        if(sharkgame.settings.current.showAnimations) {
             buttonSelector.hide()
                 .css("opacity", 0)
                 .slideDown(50)
@@ -381,7 +381,7 @@ sharkgame.Home = {
 
     getActionCategory: function(actionName) {
         var categoryName = "";
-        $.each(sharkgame.HomeActionCategories, function(categoryKey, categoryValue) {
+        $.each(sharkgame.homeactioncategories, function(categoryKey, categoryValue) {
             if(categoryName !== "") {
                 return;
             }
@@ -397,14 +397,14 @@ sharkgame.Home = {
         return categoryName;
     },
 
-    onHomeButton: function() {
-        var h = sharkgame.Home;
-        var r = sharkgame.Resources;
-        var amountToBuy = sharkgame.Settings.current.buyAmount;
+    onhomeButton: function() {
+        var h = sharkgame.home;
+        var r = sharkgame.resources;
+        var amountToBuy = sharkgame.settings.current.buyAmount;
         // get related entry in home button table
         var button = $(this);
         var buttonName = button.attr("id");
-        var action = sharkgame.HomeActions[buttonName];
+        var action = sharkgame.homeactions[buttonName];
         var actionCost = {};
         var amount = 0;
         if(amountToBuy < 0) {
@@ -431,15 +431,15 @@ sharkgame.Home = {
             // free action
             // do not repeat or check for costs
             if(action.effect.resource) {
-                r.changeManyResources(action.effect.resource);
+                r.changeManyresources(action.effect.resource);
             }
-            sharkgame.Log.addMessage(sharkgame.choose(action.outcomes));
+            sharkgame.log.addMessage(sharkgame.choose(action.outcomes));
         } else if(amount > 0) {
             // cost action
             // check cost, only proceed if sufficient resources (prevention against lazy cheating, god, at least cheat in the right resources)
-            if(r.checkResources(actionCost)) {
+            if(r.checkresources(actionCost)) {
                 // take cost
-                r.changeManyResources(actionCost, true);
+                r.changeManyresources(actionCost, true);
                 // execute effects
                 if(action.effect.resource) {
                     var resourceChange;
@@ -448,16 +448,16 @@ sharkgame.Home = {
                     } else {
                         resourceChange = action.effect.resource;
                     }
-                    r.changeManyResources(resourceChange);
+                    r.changeManyresources(resourceChange);
                 }
                 // print outcome to log
                 if(!(action.multiOutcomes) || (amount == 1)) {
-                    sharkgame.Log.addMessage(sharkgame.choose(action.outcomes));
+                    sharkgame.log.addMessage(sharkgame.choose(action.outcomes));
                 } else {
-                    sharkgame.Log.addMessage(sharkgame.choose(action.multiOutcomes));
+                    sharkgame.log.addMessage(sharkgame.choose(action.multiOutcomes));
                 }
             } else {
-                sharkgame.Log.addMessage("You can't afford that!");
+                sharkgame.log.addMessage("You can't afford that!");
             }
         }
         if(button.hasClass("newlyDiscovered")) {
@@ -477,7 +477,7 @@ sharkgame.Home = {
             var currAmount = resource.amount;
             if(resource.jobs) {
                 $.each(resource.jobs, function(_, v) {
-                    currAmount += sharkgame.Resources.getResource(v);
+                    currAmount += sharkgame.resources.getResource(v);
                 });
             }
             var costFunction = v.costFunction;
@@ -485,13 +485,13 @@ sharkgame.Home = {
             var cost = 0;
             switch(costFunction) {
                 case "constant":
-                    cost = sharkgame.MathUtil.constantCost(currAmount, currAmount + amount, k);
+                    cost = sharkgame.utilmath.constantCost(currAmount, currAmount + amount, k);
                     break;
                 case "linear":
-                    cost = sharkgame.MathUtil.linearCost(currAmount, currAmount + amount, k);
+                    cost = sharkgame.utilmath.linearCost(currAmount, currAmount + amount, k);
                     break;
                 case "unique":
-                    cost = sharkgame.MathUtil.uniqueCost(currAmount, currAmount + amount, k);
+                    cost = sharkgame.utilmath.uniqueCost(currAmount, currAmount + amount, k);
                     break;
             }
             calcCost[v.resource] = cost;
@@ -507,7 +507,7 @@ sharkgame.Home = {
             var currAmount = resource.amount;
             if(resource.jobs) {
                 $.each(resource.jobs, function(_, v) {
-                    currAmount += sharkgame.Resources.getResource(v);
+                    currAmount += sharkgame.resources.getResource(v);
                 });
             }
             max = Number.MAX_VALUE;
@@ -520,13 +520,13 @@ sharkgame.Home = {
                 var subMax = -1;
                 switch(costFunction) {
                     case "constant":
-                        subMax = sharkgame.MathUtil.constantMax(currAmount, costResource.amount, k) - currAmount;
+                        subMax = sharkgame.utilmath.constantMax(currAmount, costResource.amount, k) - currAmount;
                         break;
                     case "linear":
-                        subMax = sharkgame.MathUtil.linearMax(currAmount, costResource.amount, k) - currAmount;
+                        subMax = sharkgame.utilmath.linearMax(currAmount, costResource.amount, k) - currAmount;
                         break;
                     case "unique":
-                        subMax = sharkgame.MathUtil.uniqueMax(currAmount, costResource.amount, k) - currAmount;
+                        subMax = sharkgame.utilmath.uniqueMax(currAmount, costResource.amount, k) - currAmount;
                         break;
                 }
                 max = Math.min(max, subMax);
@@ -536,6 +536,6 @@ sharkgame.Home = {
     },
 
     toggleHelp: function() {
-        sharkgame.Settings.current.showTabHelp = !sharkgame.Settings.current.showTabHelp;
+        sharkgame.settings.current.showTabHelp = !sharkgame.settings.current.showTabHelp;
     }
 };

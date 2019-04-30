@@ -1,4 +1,4 @@
-sharkgame.HomeActions = {
+sharkgame.homeactions = {
 
     // FREEBIES ////////////////////////////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@ sharkgame.HomeActions = {
         helpText: "Use your natural shark prowess to find and catch a fish."
     },
 
-     // MAKE ADVANCED RESOURCES  ///////////////////////////////////////////////////////////////////////////////
+     // MAKE ADVANCED resources  ///////////////////////////////////////////////////////////////////////////////
 
     'transmuteSharkonium': {
         name: "Transmute stuff to sharkonium",
@@ -1543,7 +1543,7 @@ sharkgame.HomeActions = {
 
 };
 
-sharkgame.HomeActionCategories = {
+sharkgame.homeactioncategories = {
 
     all: { // This category should be handled specially.
         name: "All",

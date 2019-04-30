@@ -1,4 +1,4 @@
-sharkgame.Settings = {
+sharkgame.settings = {
 
     current: {},
 
@@ -24,9 +24,9 @@ sharkgame.Settings = {
         ]
     },
 
-    groupResources: {
+    groupresources: {
         defaultSetting: true,
-        name: "Group Resources",
+        name: "Group resources",
         desc: "Group resources in the table into categories for legibility.",
         show: true,
         options: [
@@ -34,13 +34,13 @@ sharkgame.Settings = {
             false
         ],
         onChange: function() {
-            sharkgame.Resources.rebuildTable = true;
+            sharkgame.resources.rebuildTable = true;
         }
     },
 
     buttonDisplayType: {
         defaultSetting: "pile",
-        name: "Home Sea Button Display",
+        name: "home Sea Button Display",
         desc: "Do you want a vertical list of buttons, or a more space-saving configuration?",
         show: true,
         options: [
@@ -48,7 +48,7 @@ sharkgame.Settings = {
             "pile"
         ],
         onChange: function() {
-            sharkgame.ui.changeTab(sharkgame.Tabs.current);
+            sharkgame.ui.changeTab(sharkgame.tabs.current);
         }
     },
 
@@ -78,14 +78,14 @@ sharkgame.Settings = {
         ],
         onChange: function() {
             clearInterval(sharkgame.main.autosaveHandler);
-            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.Settings.current.autosaveFrequency * 60000);
-            sharkgame.Log.addMessage("Now autosaving every " + sharkgame.Settings.current.autosaveFrequency + " minute" + sharkgame.plural(sharkgame.Settings.current.autosaveFrequency) + ".");
+            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.settings.current.autosaveFrequency * 60000);
+            sharkgame.log.addMessage("Now autosaving every " + sharkgame.settings.current.autosaveFrequency + " minute" + sharkgame.plural(sharkgame.settings.current.autosaveFrequency) + ".");
         }
     },
 
     logMessageMax: {
         defaultSetting: 20,
-        name: "Max Log Messages",
+        name: "Max log Messages",
         desc: "How many messages to show before removing old ones.",
         show: true,
         options: [
@@ -98,7 +98,7 @@ sharkgame.Settings = {
             50
         ],
         onChange: function() {
-            sharkgame.Log.correctLogLength();
+            sharkgame.log.correctlogLength();
         }
     },
 
@@ -119,10 +119,10 @@ sharkgame.Settings = {
         ],
         onChange: function() {
             var sidebar = $('#sidebar');
-            if(sharkgame.Settings.current.showAnimations) {
-                sidebar.animate({width: sharkgame.Settings.current.sidebarWidth}, "100");
+            if(sharkgame.settings.current.showAnimations) {
+                sidebar.animate({width: sharkgame.settings.current.sidebarWidth}, "100");
             } else {
-                sidebar.width(sharkgame.Settings.current.sidebarWidth);
+                sidebar.width(sharkgame.settings.current.sidebarWidth);
             }
         }
     },
@@ -149,8 +149,8 @@ sharkgame.Settings = {
             false
         ],
         onChange: function() {
-            sharkgame.Resources.rebuildTable = true;
-            sharkgame.Stats.recreateIncomeTable = true;
+            sharkgame.resources.rebuildTable = true;
+            sharkgame.stats.recreateIncomeTable = true;
         }
     },
 
@@ -176,7 +176,7 @@ sharkgame.Settings = {
             false
         ],
         onChange: function() {
-            sharkgame.ui.changeTab(sharkgame.Tabs.current);
+            sharkgame.ui.changeTab(sharkgame.tabs.current);
         }
     }
 

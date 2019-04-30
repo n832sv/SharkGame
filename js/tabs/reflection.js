@@ -1,8 +1,8 @@
-sharkgame.Reflection = {
+sharkgame.reflection = {
 
     tabId: "reflection",
     tabDiscovered: false,
-    tabName: "Reflection",
+    tabName: "reflection",
     tabBg: "img/bg/bg-gate.png",
 
     sceneImage: "img/events/misc/scene-reflection.png",
@@ -17,9 +17,9 @@ sharkgame.Reflection = {
     "</br><span='medDesc'>Reflect upon the changes in yourself and reality you have made here.</span>",
 
     init: function() {
-        var r = sharkgame.Reflection;
+        var r = sharkgame.reflection;
         // register tab
-        sharkgame.Tabs[r.tabId] = {
+        sharkgame.tabs[r.tabId] = {
             id: r.tabId,
             name: r.tabName,
             discovered: r.tabDiscovered,
@@ -29,14 +29,14 @@ sharkgame.Reflection = {
     },
 
     switchTo: function() {
-        var r = sharkgame.Reflection;
+        var r = sharkgame.reflection;
         var content = $('#content');
         content.append($('<div>').attr("id", "tabMessage"));
         content.append($('<div>').attr("id", "artifactList"));
         var message = r.message;
         var tabMessageSel = $('#tabMessage');
-        if(sharkgame.Settings.current.showTabImages) {
-            message = "<img width=400 height=200 src='" + r.sceneImage + "' id='tabSceneImageEssence'>" + message;
+        if(sharkgame.settings.current.showTabImages) {
+            message = "<img width=400 height=200 src='" + r.sceneImage + "' id='tabsceneImageEssence'>" + message;
             tabMessageSel.css("background-image", "url('" + r.tabBg + "')");
         }
         tabMessageSel.html(message);
@@ -55,23 +55,23 @@ sharkgame.Reflection = {
             if(artifactData.level > 0) {
                 var maxedOut = artifactData.level >= artifactData.max;
                 var item = $('<div>').addClass("artifactDiv");
-                var artifactLabel = artifactData.name +
+                var artifactlabel = artifactData.name +
                     "<br><span class='medDesc'>";
                 if(maxedOut) {
-                    artifactLabel += "(Maximum Power)";
+                    artifactlabel += "(Maximum Power)";
                 } else {
-                    artifactLabel += "(Power: " + m.beautify(artifactData.level) + ")";
+                    artifactlabel += "(Power: " + m.beautify(artifactData.level) + ")";
                 }
-                artifactLabel += "</span><br><em>" + artifactData.flavour + "</em>";
+                artifactlabel += "</span><br><em>" + artifactData.flavour + "</em>";
 
-                item.append(artifactLabel);
+                item.append(artifactlabel);
                 listSel.append(item);
 
                 var spritename = "artifacts/" + artifactKey;
-                if(sharkgame.Settings.current.iconPositions !== "off") {
-                    var iconDiv = sharkgame.changeSprite(sharkgame.spriteIconPath, spritename, null, "general/missing-artifact");
+                if(sharkgame.settings.current.iconPositions !== "off") {
+                    var iconDiv = sharkgame.ui.changeSprite(sharkgame.spriteIconPath, spritename, null, "general/missing-artifact");
                     if(iconDiv) {
-                        iconDiv.addClass("button-icon-" + sharkgame.Settings.current.iconPositions);
+                        iconDiv.addClass("button-icon-" + sharkgame.settings.current.iconPositions);
                         iconDiv.addClass("gatewayButton");
                         item.prepend(iconDiv);
                     }

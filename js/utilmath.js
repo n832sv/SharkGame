@@ -1,6 +1,6 @@
 var sharkgame = sharkgame || {};
 
-sharkgame.MathUtil = {
+sharkgame.utilmath = {
 
     // a = current amount
     // b = desired amount

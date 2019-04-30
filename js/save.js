@@ -1,80 +1,80 @@
-sharkgame.Save = {
+sharkgame.save = {
 
-    saveFileName: "sharkgameSave",
+    saveFileName: "sharkgamesave",
 
     saveGame: function(suppressSavingToStorage, dontFlat) {
         // populate save data object
         var saveString = "";
-        var saveData = {};
-        saveData.version = sharkgame.VERSION;
-        saveData.resources = {};
-        saveData.tabs = {};
-        saveData.settings = {};
-        saveData.upgrades = {};
-        saveData.gateCostsMet = [];
-        saveData.world = {type: sharkgame.World.worldType, level: sharkgame.World.planetLevel};
-        saveData.artifacts = {};
-        saveData.gateway = {betweenRuns: sharkgame.gameOver, wonGame: sharkgame.wonGame};
+        var savedata = {};
+        savedata.version = sharkgame.VERSION;
+        savedata.resources = {};
+        savedata.tabs = {};
+        savedata.settings = {};
+        savedata.upgrades = {};
+        savedata.gateCostsMet = [];
+        savedata.world = {type: sharkgame.world.worldType, level: sharkgame.world.planetLevel};
+        savedata.artifacts = {};
+        savedata.gateway = {betweenRuns: sharkgame.gameOver, wonGame: sharkgame.wonGame};
 
         $.each(sharkgame.playerresources, function(k, v) {
-            saveData.resources[k] = {
+            savedata.resources[k] = {
                 amount: v.amount,
                 totalAmount: v.totalAmount
             };
         });
 
-        $.each(sharkgame.Upgrades, function(k, v) {
-            saveData.upgrades[k] = v.purchased;
+        $.each(sharkgame.upgrades, function(k, v) {
+            savedata.upgrades[k] = v.purchased;
         });
 
-        $.each(sharkgame.Tabs, function(k, v) {
+        $.each(sharkgame.tabs, function(k, v) {
             if(k !== "current") {
-                saveData.tabs[k] = v.discovered;
+                savedata.tabs[k] = v.discovered;
             } else {
-                saveData.tabs.current = v;
+                savedata.tabs.current = v;
             }
         });
 
         var gateCostTypes = [];
-        $.each(sharkgame.Gate.costsMet, function(name, met) {
+        $.each(sharkgame.gate.costsMet, function(name, met) {
             gateCostTypes.push(name);
         });
         gateCostTypes.sort();
 
         $.each(gateCostTypes, function(i, name) {
-            saveData.gateCostsMet[i] = sharkgame.Gate.costsMet[name];
+            savedata.gateCostsMet[i] = sharkgame.gate.costsMet[name];
         });
 
-        $.each(sharkgame.Settings, function(k, v) {
+        $.each(sharkgame.settings, function(k, v) {
             if(k !== "current") {
-                saveData.settings[k] = sharkgame.Settings.current[k];
+                savedata.settings[k] = sharkgame.settings.current[k];
             }
         });
 
         $.each(sharkgame.Artifacts, function(k, v) {
-            saveData.artifacts[k] = v.level;
+            savedata.artifacts[k] = v.level;
         });
 
         // add timestamp
-        //saveData.timestamp = (new Date()).getTime();
-        saveData.timestampLastSave = (new Date()).getTime();
-        saveData.timestampGameStart = sharkgame.timestampGameStart;
-        saveData.timestampRunStart = sharkgame.timestampRunStart;
-        saveData.timestampRunEnd = sharkgame.timestampRunEnd;
+        //savedata.timestamp = (new Date()).getTime();
+        savedata.timestampLastsave = (new Date()).getTime();
+        savedata.timestampGameStart = sharkgame.timestampGameStart;
+        savedata.timestampRunStart = sharkgame.timestampRunStart;
+        savedata.timestampRunEnd = sharkgame.timestampRunEnd;
 
         if(dontFlat) {
-            saveData.saveVersion = sharkgame.Save.saveUpdaters.length - 1;
-            saveString = JSON.stringify(saveData);
+            savedata.saveVersion = sharkgame.save.saveUpdaters.length - 1;
+            saveString = JSON.stringify(savedata);
         } else {
             //make a current-version template
-            var saveVersion = sharkgame.Save.saveUpdaters.length - 1;
+            var saveVersion = sharkgame.save.saveUpdaters.length - 1;
             var template = {};
             for(var i = 0; i <= saveVersion; i++) {
-                var updater = sharkgame.Save.saveUpdaters[i];
+                var updater = sharkgame.save.saveUpdaters[i];
                 template = updater(template);
             }
             //flatten
-            var flatData = sharkgame.Save.flattenData(template, saveData);
+            var flatData = sharkgame.save.flattenData(template, savedata);
             flatData.unshift(saveVersion);
             saveString = pako.deflate(JSON.stringify(flatData), {to: 'string'});
         }
@@ -82,8 +82,8 @@ sharkgame.Save = {
         if(!suppressSavingToStorage) {
             try {
                 // convert compressed data to ascii85 for friendlier browser support (IE11 doesn't like weird binary data)
-                var convertedSaveString = ascii85.encode(saveString);
-                localStorage.setItem(sharkgame.Save.saveFileName, convertedSaveString);
+                var convertedsaveString = ascii85.encode(saveString);
+                localStorage.setItem(sharkgame.save.saveFileName, convertedsaveString);
             } catch(err) {
                 throw new Error("Couldn't save to local storage. Reason: " + err.message);
             }
@@ -91,40 +91,40 @@ sharkgame.Save = {
         return saveString;
     },
 
-    loadGame: function(importSaveData) {
-        var saveData;
-        var saveDataString = importSaveData || localStorage.getItem(sharkgame.Save.saveFileName);
+    loadGame: function(importsavedata) {
+        var savedata;
+        var savedataString = importsavedata || localStorage.getItem(sharkgame.save.saveFileName);
 
-        if(!saveDataString) {
+        if(!savedataString) {
             throw new Error("Tried to load game, but no game to load.");
         }
 
         // if first letter of string is <, data is encoded in ascii85, decode it.
-        if(saveDataString.substring(0, 2) === "<~") {
+        if(savedataString.substring(0, 2) === "<~") {
             try {
-                saveDataString = ascii85.decode(saveDataString);
+                savedataString = ascii85.decode(savedataString);
             } catch(err) {
-                throw new Error("Saved data looked like it was encoded in ascii85, but it couldn't be decoded. Can't load. Your save: " + saveDataString)
+                throw new Error("saved data looked like it was encoded in ascii85, but it couldn't be decoded. Can't load. Your save: " + savedataString)
             }
         }
 
         // if first letter of string is x, data is compressed and needs uncompressing.
-        if(saveDataString.charAt(0) === 'x') {
+        if(savedataString.charAt(0) === 'x') {
             // decompress string
             try {
-                saveDataString = pako.inflate(saveDataString, {to: 'string'});
+                savedataString = pako.inflate(savedataString, {to: 'string'});
             } catch(err) {
-                throw new Error("Saved data is compressed, but it can't be decompressed. Can't load. Your save: " + saveDataString);
+                throw new Error("saved data is compressed, but it can't be decompressed. Can't load. Your save: " + savedataString);
             }
         }
 
         // if first letter of string is { or [, data is json
-        if(saveDataString.charAt(0) === '{' || saveDataString.charAt(0) === '[') {
+        if(savedataString.charAt(0) === '{' || savedataString.charAt(0) === '[') {
             try {
-                saveData = JSON.parse(saveDataString);
+                savedata = JSON.parse(savedataString);
             } catch(err) {
-                var errMessage = "Couldn't load save data. It didn't parse correctly. Your save: " + saveDataString;
-                if(importSaveData) {
+                var errMessage = "Couldn't load save data. It didn't parse correctly. Your save: " + savedataString;
+                if(importsavedata) {
                     errMessage += " Did you paste the entire string?";
                 }
                 throw new Error(errMessage);
@@ -132,63 +132,63 @@ sharkgame.Save = {
         }
 
         // if first letter of string was [, data was packed, unpack it
-        if(saveDataString.charAt(0) === '[') {
+        if(savedataString.charAt(0) === '[') {
             try {
                 //check version
-                var currentVersion = sharkgame.Save.saveUpdaters.length - 1;
-                var saveVersion = saveData.shift();
+                var currentVersion = sharkgame.save.saveUpdaters.length - 1;
+                var saveVersion = savedata.shift();
                 if(typeof saveVersion !== "number" || saveVersion % 1 !== 0 || saveVersion < 0 || saveVersion > currentVersion) {
                     throw new Error("Invalid save version!");
                 }
                 //create matching template
                 var template = {};
                 for(var i = 0; i <= saveVersion; i++) {
-                    var updater = sharkgame.Save.saveUpdaters[i];
+                    var updater = sharkgame.save.saveUpdaters[i];
                     template = updater(template);
                 }
                 //unpack
-                var saveDataFlat = saveData;
-                saveData = sharkgame.Save.expandData(template, saveDataFlat.slice());
-                saveData.saveVersion = saveVersion;
+                var savedataFlat = savedata;
+                savedata = sharkgame.save.expandData(template, savedataFlat.slice());
+                savedata.saveVersion = saveVersion;
 
                 function checkTimes(data) {
-                    return (data.timestampLastSave > 1e12 && data.timestampLastSave < 2e12 &&
+                    return (data.timestampLastsave > 1e12 && data.timestampLastsave < 2e12 &&
                     data.timestampGameStart > 1e12 && data.timestampGameStart < 2e12 &&
                     data.timestampRunStart > 1e12 && data.timestampRunStart < 2e12)
                 }
 
                 //check if the template was sorted wrong when saving
-                if(saveVersion <= 5 && !checkTimes(saveData)) {
-                    saveData = sharkgame.Save.expandData(template, saveDataFlat.slice(), true);
-                    saveData.saveVersion = saveVersion;
+                if(saveVersion <= 5 && !checkTimes(savedata)) {
+                    savedata = sharkgame.save.expandData(template, savedataFlat.slice(), true);
+                    savedata.saveVersion = saveVersion;
                 }
 
-                if(!checkTimes(saveData)) {
+                if(!checkTimes(savedata)) {
                     throw new Error("Order appears to be corrupt.");
                 }
             } catch(err) {
-                throw new Error("Couldn't unpack packed save data. Reason: " + err.message + ". Your save: " + saveDataString);
+                throw new Error("Couldn't unpack packed save data. Reason: " + err.message + ". Your save: " + savedataString);
             }
         }
 
-        if(saveData) {
+        if(savedata) {
             // go through it
 
             //check for updates
-            var currentVersion = sharkgame.Save.saveUpdaters.length - 1;
-            saveData.saveVersion = saveData.saveVersion || 0;
-            if(saveData.saveVersion < currentVersion) {
-                for(i = saveData.saveVersion + 1; i <= currentVersion; i++) {
-                    var updater = sharkgame.Save.saveUpdaters[i];
-                    saveData = updater(saveData);
-                    saveData.saveVersion = i;
+            var currentVersion = sharkgame.save.saveUpdaters.length - 1;
+            savedata.saveVersion = savedata.saveVersion || 0;
+            if(savedata.saveVersion < currentVersion) {
+                for(i = savedata.saveVersion + 1; i <= currentVersion; i++) {
+                    var updater = sharkgame.save.saveUpdaters[i];
+                    savedata = updater(savedata);
+                    savedata.saveVersion = i;
                 }
                 // let player know update went fine
-                sharkgame.Log.addMessage("Updated save data from v " + saveData.version + " to " + sharkgame.VERSION + ".");
+                sharkgame.log.addMessage("Updated save data from v " + savedata.version + " to " + sharkgame.VERSION + ".");
             }
 
-            if(saveData.resources) {
-                $.each(saveData.resources, function(k, v) {
+            if(savedata.resources) {
+                $.each(savedata.resources, function(k, v) {
                     // check that this isn't an old resource that's been removed from the game for whatever reason
                     if(sharkgame.playerresources[k]) {
                         sharkgame.playerresources[k].amount = isNaN(v.amount) ? 0 : v.amount;
@@ -198,98 +198,98 @@ sharkgame.Save = {
             }
 
             // hacky kludge: force table creation
-            sharkgame.Resources.reconstructResourcesTable();
+            sharkgame.resources.reconstructresourcesTable();
 
-            if(saveData.upgrades) {
-                $.each(saveData.upgrades, function(k, v) {
-                    if(saveData.upgrades[k]) {
-                        sharkgame.Lab.addUpgrade(k);
+            if(savedata.upgrades) {
+                $.each(savedata.upgrades, function(k, v) {
+                    if(savedata.upgrades[k]) {
+                        sharkgame.lab.addUpgrade(k);
                     }
                 });
             }
 
             // load artifacts (need to have the terraformer and cost reducer loaded before world init)
-            if(saveData.artifacts) {
-                sharkgame.Gateway.init();
-                $.each(saveData.artifacts, function(k, v) {
+            if(savedata.artifacts) {
+                sharkgame.gateway.init();
+                $.each(savedata.artifacts, function(k, v) {
                     sharkgame.Artifacts[k].level = v;
                 });
             }
 
             // load world type and level and apply world properties
-            if(saveData.world) {
-                sharkgame.World.init();
-                sharkgame.World.worldType = saveData.world.type;
-                sharkgame.World.planetLevel = saveData.world.level;
-                sharkgame.World.apply();
-                sharkgame.Home.init();
+            if(savedata.world) {
+                sharkgame.world.init();
+                sharkgame.world.worldType = savedata.world.type;
+                sharkgame.world.planetLevel = savedata.world.level;
+                sharkgame.world.apply();
+                sharkgame.home.init();
             }
 
             // apply artifacts (world needs to be init first before applying other artifacts, but special ones need to be _loaded_ first)
-            if(saveData.artifacts) {
-                sharkgame.Gateway.applyArtifacts(true);
+            if(savedata.artifacts) {
+                sharkgame.gateway.applyArtifacts(true);
             }
 
-            if(saveData.tabs) {
-                $.each(saveData.tabs, function(k, v) {
-                    if(sharkgame.Tabs[k]) {
-                        sharkgame.Tabs[k].discovered = v;
+            if(savedata.tabs) {
+                $.each(savedata.tabs, function(k, v) {
+                    if(sharkgame.tabs[k]) {
+                        sharkgame.tabs[k].discovered = v;
                     }
                 });
-                if(saveData.tabs.current) {
-                    sharkgame.Tabs.current = saveData.tabs.current;
+                if(savedata.tabs.current) {
+                    sharkgame.tabs.current = savedata.tabs.current;
                 }
             }
 
             var gateCostTypes = [];
-            $.each(sharkgame.Gate.costsMet, function(name, met) {
+            $.each(sharkgame.gate.costsMet, function(name, met) {
                 gateCostTypes.push(name);
             });
             gateCostTypes.sort();
 
             if(gateCostTypes) {
                 $.each(gateCostTypes, function(i, name) {
-                    sharkgame.Gate.costsMet[name] = saveData.gateCostsMet[i];
+                    sharkgame.gate.costsMet[name] = savedata.gateCostsMet[i];
                 });
             }
 
-            if(saveData.settings) {
-                $.each(saveData.settings, function(k, v) {
-                    if(sharkgame.Settings.current[k] !== undefined) {
-                        sharkgame.Settings.current[k] = v;
+            if(savedata.settings) {
+                $.each(savedata.settings, function(k, v) {
+                    if(sharkgame.settings.current[k] !== undefined) {
+                        sharkgame.settings.current[k] = v;
                         // update anything tied to this setting right off the bat
-                        (sharkgame.Settings[k].onChange || $.noop)();
+                        (sharkgame.settings[k].onChange || $.noop)();
                     }
                 });
             }
 
             var currTimestamp = (new Date()).getTime();
             // create surrogate timestamps if necessary
-            if((typeof saveData.timestampLastSave !== "number")) {
-                saveData.timestampLastSave = currTimestamp;
+            if((typeof savedata.timestampLastsave !== "number")) {
+                savedata.timestampLastsave = currTimestamp;
             }
-            if((typeof saveData.timestampGameStart !== "number")) {
-                saveData.timestampGameStart = currTimestamp;
+            if((typeof savedata.timestampGameStart !== "number")) {
+                savedata.timestampGameStart = currTimestamp;
             }
-            if((typeof saveData.timestampRunStart !== "number")) {
-                saveData.timestampRunStart = currTimestamp;
+            if((typeof savedata.timestampRunStart !== "number")) {
+                savedata.timestampRunStart = currTimestamp;
             }
-            if((typeof saveData.timestampRunEnd !== "number")) {
-                saveData.timestampRunEnd = currTimestamp;
+            if((typeof savedata.timestampRunEnd !== "number")) {
+                savedata.timestampRunEnd = currTimestamp;
             }
 
-            sharkgame.timestampLastSave = saveData.timestampLastSave;
-            sharkgame.timestampGameStart = saveData.timestampGameStart;
-            sharkgame.timestampRunStart = saveData.timestampRunStart;
-            sharkgame.timestampRunEnd = saveData.timestampRunEnd;
+            sharkgame.timestampLastsave = savedata.timestampLastsave;
+            sharkgame.timestampGameStart = savedata.timestampGameStart;
+            sharkgame.timestampRunStart = savedata.timestampRunStart;
+            sharkgame.timestampRunEnd = savedata.timestampRunEnd;
 
             // load existence in in-between state,
             // else check for offline mode and process
-            var simulateOffline = sharkgame.Settings.current.offlineModeActive;
-            if(saveData.gateway) {
-                if(saveData.gateway.betweenRuns) {
+            var simulateOffline = sharkgame.settings.current.offlineModeActive;
+            if(savedata.gateway) {
+                if(savedata.gateway.betweenRuns) {
                     simulateOffline = false;
-                    sharkgame.wonGame = saveData.gateway.wonGame;
+                    sharkgame.wonGame = savedata.gateway.wonGame;
                     sharkgame.main.endGame(true);
                 }
             }
@@ -298,14 +298,14 @@ sharkgame.Save = {
             if(simulateOffline) {
                 // get times elapsed since last save game
                 var now = (new Date()).getTime();
-                var secondsElapsed = (now - saveData.timestampLastSave) / 1000;
+                var secondsElapsed = (now - savedata.timestampLastsave) / 1000;
                 if(secondsElapsed < 0) {
                     // something went hideously wrong or someone abused a system clock somewhere
                     secondsElapsed = 0;
                 }
 
                 // process this
-                sharkgame.Resources.recalculateIncomeTable();
+                sharkgame.resources.recalculateIncomeTable();
                 sharkgame.main.processSimTime(secondsElapsed);
 
                 // acknowledge long time gaps
@@ -333,27 +333,27 @@ sharkgame.Save = {
                     } else {
                         notification += (numHours === 1 ? "an" : numHours ) + " hour" + sharkgame.plural(numHours) + " since you were seen around here!";
                     }
-                    sharkgame.Log.addMessage(notification);
+                    sharkgame.log.addMessage(notification);
                 }
             }
         } else {
-            throw new Error("Couldn't load saved game. I don't know how to break this to you, but I think your save is corrupted. Your save: " + saveDataString);
+            throw new Error("Couldn't load saved game. I don't know how to break this to you, but I think your save is corrupted. Your save: " + savedataString);
         }
     },
 
     importData: function(data) {
         // decode from ascii85
-        var saveData;
+        var savedata;
         try {
-            saveData = ascii85.decode(data);
+            savedata = ascii85.decode(data);
         } catch(err) {
-            sharkgame.Log.addError("That's not encoded properly. Are you sure that's the full save export string?");
+            sharkgame.log.addError("That's not encoded properly. Are you sure that's the full save export string?");
         }
         // load the game from this save data string
         try {
-            sharkgame.Save.loadGame(saveData);
+            sharkgame.save.loadGame(savedata);
         } catch(err) {
-            sharkgame.Log.addError(err.message);
+            sharkgame.log.addError(err.message);
             console.log(err.trace);
         }
         // refresh current tab
@@ -362,29 +362,29 @@ sharkgame.Save = {
 
     exportData: function() {
         // get save
-        var saveData = localStorage.getItem(sharkgame.Save.saveFileName);
-        if(saveData === null) {
+        var savedata = localStorage.getItem(sharkgame.save.saveFileName);
+        if(savedata === null) {
             try {
-                saveData = sharkgame.Save.saveGame(true);
+                savedata = sharkgame.save.saveGame(true);
             } catch(err) {
-                sharkgame.Log.addError(err.message);
+                sharkgame.log.addError(err.message);
                 console.log(err.trace);
             }
         }
         // check if save isn't encoded
-        if(saveData.substring(0, 2) !== "<~") {
+        if(savedata.substring(0, 2) !== "<~") {
             // encode it
-            saveData = ascii85.encode(saveData);
+            savedata = ascii85.encode(savedata);
         }
-        return saveData;
+        return savedata;
     },
 
     savedGameExists: function() {
-        return (localStorage.getItem(sharkgame.Save.saveFileName) !== null);
+        return (localStorage.getItem(sharkgame.save.saveFileName) !== null);
     },
 
-    deleteSave: function() {
-        localStorage.removeItem(sharkgame.Save.saveFileName);
+    deletesave: function() {
+        localStorage.removeItem(sharkgame.save.saveFileName);
     },
 
     // Thanks to Dylan for managing to crush saves down to a much smaller size!
@@ -430,7 +430,7 @@ sharkgame.Save = {
             });
         }
 
-        flattenPart(sharkgame.Save.createBlueprint(template), source);
+        flattenPart(sharkgame.save.createBlueprint(template), source);
         return out;
     },
 
@@ -448,7 +448,7 @@ sharkgame.Save = {
             return out;
         }
 
-        var expanded = expandPart(sharkgame.Save.createBlueprint(template, sortWrong));
+        var expanded = expandPart(sharkgame.save.createBlueprint(template, sortWrong));
         if(data.length !== 0) throw new Error("Incorrect save length.");
         return expanded;
     },
@@ -499,8 +499,8 @@ sharkgame.Save = {
             save = $.extend(true, save, {
                 "resources": {"sandDigger": {"amount": 0, "totalAmount": 0}, "junk": {"amount": 0, "totalAmount": 0}},
                 "upgrades": {statsDiscovery: null, recyclerDiscovery: null},
-                "settings": {"showTabHelp": false, "groupResources": false},
-                "timestampLastSave": save.timestamp,
+                "settings": {"showTabHelp": false, "groupresources": false},
+                "timestampLastsave": save.timestamp,
                 "timestampGameStart": null,
                 "timestampRunStart": null
             });

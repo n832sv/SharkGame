@@ -85,7 +85,7 @@ sharkgame.text = {
             message: "The gate beckons. The secret must be unlocked.<br>&nbsp"
         },
         // LATER RUNS
-        // INITIAL WORLD STATUSES
+        // INITIAL world STATUSES
         {
             unlock: {world: "chaotic"},
             message: "Overwhelming reinforcements. Overwhelming everything. So hard to focus.<br>&nbsp"

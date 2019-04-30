@@ -1,11 +1,51 @@
+
+
 sharkgame.ui = {
 
-	setUpTitleBar: function() {
+
+
+    getImageIconHTML: function(imagePath, width, height) {
+        if(!imagePath) {
+            imagePath = "http://placekitten.com/g/" + Math.floor(width) + "/" + Math.floor(height);
+        }
+        var imageHtml = "";
+        if(sharkgame.settings.current.iconPositions !== "off") {
+            imageHtml += "<img width=" + width + " height=" + height + " src='" + imagePath + "' class='button-icon-" + sharkgame.settings.current.iconPositions + "'>";
+        }
+        return imageHtml;
+    },
+
+    changeSprite: function(spritePath, imageName, imageDiv, backupImageName) {
+        var spriteData = sharkgame.sprites[imageName];
+        if(!imageDiv) {
+            imageDiv = $('<div>');
+        }
+
+        // if the original sprite data is undefined, try loading the backup
+        if(!spriteData) {
+            spriteData = sharkgame.sprites[backupImageName];
+        }
+
+        if(spriteData) {
+            imageDiv.css('background-image', 'url(' + spritePath + ')');
+            //imageDiv.css('background-position', "-" + spriteData.frame.x + "px -" + spriteData.frame.y + "px");
+            imageDiv.css('background-position', "-" + spriteData.frame.x + "px -" + spriteData.frame.y + "px");
+            imageDiv.width(spriteData.frame.w);
+            imageDiv.height(spriteData.frame.h);
+        } else {
+            imageDiv.css('background-image', 'url("//placehold.it/50x50")');
+            imageDiv.width(50);
+            imageDiv.height(50);
+        }
+        return imageDiv;
+    },
+
+	setUptitlebar: function() {
         var titleMenu = $('#titlemenu');
         var subTitleMenu = $('#subtitlemenu');
         titleMenu.empty();
         subTitleMenu.empty();
-        $.each(sharkgame.TitleBar, function(k, v) {
+        $.each(sharkgame.titlebar, function(k, v) {
             var option = "<li><a id='" + k + "' href='javascript:;'>" + v.name + "</a></li>";
             if(v.main) {
                 titleMenu.append(option);
@@ -17,7 +57,7 @@ sharkgame.ui = {
 	},
 
     setUpTab: function() {
-        var tabs = sharkgame.Tabs;
+        var tabs = sharkgame.tabs;
         // empty out content div
         var content = $('#content');
         content.empty();
@@ -38,22 +78,22 @@ sharkgame.ui = {
     },
     
     createTabNavigation: function() {
-        var tabs = sharkgame.Tabs;
+        var tabs = sharkgame.tabs;
         var tabList = $('#tabList');
         tabList.empty();
         // add navigation
         // check if we have more than one discovered tab, else bypass this
-        var numTabsDiscovered = 0;
+        var numtabsDiscovered = 0;
         $.each(tabs, function(k, v) {
             if(v.discovered) {
-                numTabsDiscovered++;
+                numtabsDiscovered++;
             }
         });
-        if(numTabsDiscovered > 1) {
+        if(numtabsDiscovered > 1) {
             // add a header for each discovered tab
             // make it a link if it's not the current tab
             $.each(tabs, function(k, v) {
-                var onThisTab = (sharkgame.Tabs.current === k);
+                var onThisTab = (sharkgame.tabs.current === k);
                 if(v.discovered) {
                     var tabListItem = $('<li>');
                     if(onThisTab) {
@@ -75,20 +115,20 @@ sharkgame.ui = {
         }
     },
 
-    createBuyButtons: function(customLabel) {
+    createBuyButtons: function(customlabel) {
         // add buy buttons
         var buttonList = $('#tabButtons');
         buttonList.empty();
-        $.each(sharkgame.Settings.buyAmount.options, function(_, v) {
+        $.each(sharkgame.settings.buyAmount.options, function(_, v) {
             var amount = v;
-            var disableButton = (v === sharkgame.Settings.current.buyAmount);
+            var disableButton = (v === sharkgame.settings.current.buyAmount);
             buttonList.prepend($('<li>')
                 .append($('<button>')
                     .addClass("min buybuttons")
                     .attr("id", "buy-" + v)
                     .prop("disabled", disableButton)
             ));
-            var label = customLabel ? customLabel + " " : "buy ";
+            var label = customlabel ? customlabel + " " : "buy ";
             if(amount < 0) {
                 if(amount < -2) {
                     label += "1/3 max"
@@ -103,7 +143,7 @@ sharkgame.ui = {
             $('#buy-' + v).html(label)
                 .click(function() {
                     var thisButton = $(this);
-                    sharkgame.Settings.current.buyAmount = parseInt(thisButton.attr("id").slice(4));
+                    sharkgame.settings.current.buyAmount = parseInt(thisButton.attr("id").slice(4));
                     $("button[id^='buy-']").prop("disabled", false);
                     thisButton.prop("disabled", true);
                 });
@@ -111,12 +151,12 @@ sharkgame.ui = {
     },
 
     changeTab: function(tab) {
-        sharkgame.Tabs.current = tab;
+        sharkgame.tabs.current = tab;
         sharkgame.ui.setUpTab();
     },
 
     discoverTab: function(tab) {
-        sharkgame.Tabs[tab].discovered = true;
+        sharkgame.tabs[tab].discovered = true;
         // force a total redraw of the navigation
         sharkgame.ui.createTabMenu();
     },
@@ -127,7 +167,7 @@ sharkgame.ui = {
     },
     
     showSidebarIfNeeded: function() {
-		if(sharkgame.Settings.current.showAnimations) {
+		if(sharkgame.settings.current.showAnimations) {
 			$('#sidebar').show("500");
         } else {
             $('#sidebar').show();
@@ -138,7 +178,7 @@ sharkgame.ui = {
     setUpOptions: function() {
         var optionsTable = $('<table>').attr("id", "optionTable");
         // add settings specified in settings.js
-        $.each(sharkgame.Settings, function(key, value) {
+        $.each(sharkgame.settings, function(key, value) {
             if(key === "current" || !value.show) {
                 return;
             }
@@ -146,12 +186,12 @@ sharkgame.ui = {
 
             // show setting name
             row.append($('<td>')
-                    .addClass("optionLabel")
+                    .addClass("optionlabel")
                     .html(value.name + ":" +
                     "<br/><span class='smallDesc'>" + "(" + value.desc + ")" + "</span>")
             );
 
-            var currentSetting = sharkgame.Settings.current[key];
+            var currentSetting = sharkgame.settings.current[key];
 
             // show setting adjustment buttons
             $.each(value.options, function(k, v) {
@@ -168,11 +208,11 @@ sharkgame.ui = {
             optionsTable.append(row);
         });
 
-        // SAVE IMPORT/EXPORT
+        // save IMPORT/EXPORT
         // add save import/export
         var row = $('<tr>');
         row.append($('<td>')
-                .html("Import/Export Save:<br/><span class='smallDesc'>(You should probably save first!) Import or export save as text. Keep it safe!</span>")
+                .html("Import/Export save:<br/><span class='smallDesc'>(You should probably save first!) Import or export save as text. Keep it safe!</span>")
         );
         row.append($('<td>').append($('<button>')
                 .html("import")
@@ -181,9 +221,9 @@ sharkgame.ui = {
                     var importText = $('#importExportField').val();
                     if(importText === "") {
                         sharkgame.hidePane();
-                        sharkgame.Log.addError("You need to paste something in first!");
+                        sharkgame.log.addError("You need to paste something in first!");
                     } else if(confirm("Are you absolutely sure? This will override your current save.")) {
-                        sharkgame.Save.importData(importText);
+                        sharkgame.save.importData(importText);
                     }
                 })
         ));
@@ -191,7 +231,7 @@ sharkgame.ui = {
                 .html("export")
                 .addClass("option-button")
                 .click(function() {
-                    $('#importExportField').val(sharkgame.Save.exportData());
+                    $('#importExportField').val(sharkgame.save.exportData());
                 })
         ));
         // add the actual text box
@@ -203,22 +243,22 @@ sharkgame.ui = {
         optionsTable.append(row);
 
 
-        // SAVE WIPE
+        // save WIPE
         // add save wipe
         row = $('<tr>');
         row.append($('<td>')
-                .html("Wipe Save<br/><span class='smallDesc'>(Completely wipe your save and reset the game. COMPLETELY. FOREVER.)</span>")
+                .html("Wipe save<br/><span class='smallDesc'>(Completely wipe your save and reset the game. COMPLETELY. FOREVER.)</span>")
         );
         row.append($('<td>').append($('<button>')
                 .html("wipe")
                 .addClass("option-button")
                 .click(function() {
                     if(confirm("Are you absolutely sure you want to wipe your save?\nIt'll be gone forever!")) {
-                        sharkgame.Save.deleteSave();
-                        sharkgame.Gateway.deleteArtifacts(); // they're out of the save data, but not the working game memory!
-                        sharkgame.Resources.reconstructResourcesTable();
-                        sharkgame.World.worldType = "start"; // nothing else will reset this
-                        sharkgame.World.planetLevel = 1;
+                        sharkgame.save.deletesave();
+                        sharkgame.gateway.deleteArtifacts(); // they're out of the save data, but not the working game memory!
+                        sharkgame.resources.reconstructresourcesTable();
+                        sharkgame.world.worldType = "start"; // nothing else will reset this
+                        sharkgame.world.planetLevel = 1;
                         sharkgame.main.init(); // reset
                     }
                 })
@@ -290,7 +330,7 @@ sharkgame.ui = {
         if(overlay.is(':hidden')) {
             // nope, show overlay
             var overlayOpacity = customOpacity || 0.5;
-            if(sharkgame.Settings.current.showAnimations) {
+            if(sharkgame.settings.current.showAnimations) {
                 overlay.show()
                     .css("opacity", 0)
                     .animate({opacity: overlayOpacity}, fadeInTime);
@@ -331,7 +371,7 @@ sharkgame.ui = {
         paneContent.empty();
 
         paneContent.append(contents);
-        if(sharkgame.Settings.current.showAnimations && customOpacity) {
+        if(sharkgame.settings.current.showAnimations && customOpacity) {
             pane.show()
                 .css("opacity", 0)
                 .animate({opacity: 1.0}, fadeInTime);
@@ -360,7 +400,7 @@ sharkgame.ui = {
             .click(handler);
     },
     
-    constructResourceTableRowHTML: function(resource_key, resource_name, income, amount, total_amount, color) {
+    constructresourcetableRowHTML: function(resource_key, resource_name, income, amount, total_amount, color) {
 
         let row = $('<tr>');
         

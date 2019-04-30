@@ -8,10 +8,10 @@ sharkgame.ArtifactUtil = {
         }
         var amount = Math.pow(5, level);
         // force existence
-        sharkgame.World.forceExistence(resourceName);
-        var res = sharkgame.Resources.getTotalResource(resourceName);
+        sharkgame.world.forceExistence(resourceName);
+        var res = sharkgame.resources.getTotalResource(resourceName);
         if(res < amount) {
-            sharkgame.Resources.changeResource(resourceName, amount);
+            sharkgame.resources.changeResource(resourceName, amount);
         }
     },
     totemCost: function(level) {
@@ -21,7 +21,7 @@ sharkgame.ArtifactUtil = {
         if(level < 1) {
             return;
         }
-        var wr = sharkgame.World.worldResources;
+        var wr = sharkgame.world.worldresources;
         var multiplier = level + 1;
         _.each(resourceList, function(resourceName) {
             if(wr[resourceName].artifactMultiplier) {
@@ -43,11 +43,11 @@ sharkgame.Artifacts = {
             return Math.floor(Math.pow(10, level + 1));
         },
         effect: function(level) {
-            sharkgame.Resources.specialMultiplier = Math.max((2 * level), 1);
+            sharkgame.resources.specialMultiplier = Math.max((2 * level), 1);
         }
     },
     planetTerraformer: {
-        name: "World Shaper",
+        name: "world Shaper",
         desc: "Reduce the severity of planet climates.",
         flavour: "Intelligence is not changing to fit an environment, but changing the environment to fit you.",
         max: 10,
@@ -55,10 +55,10 @@ sharkgame.Artifacts = {
             return Math.floor(Math.pow(4, level + 1));
         }
         // effect is handled specially
-        // check sharkgame.World.getTerraformMultiplier
+        // check sharkgame.world.getTerraformMultiplier
     },
     gateCostReducer: {
-        name: "Gate Controller",
+        name: "gate Controller",
         desc: "Reduces the cost requirements of gates.",
         flavour: "Power over the unknown can only reach so far.",
         max: 10,
@@ -66,7 +66,7 @@ sharkgame.Artifacts = {
             return Math.floor(Math.pow(3, level + 1));
         }
         // effect is handled specially
-        // check sharkgame.World.getGateCostMultiplier
+        // check sharkgame.world.getgateCostMultiplier
     },
     planetScanner: {
         name: "Distant Foresight",
@@ -77,7 +77,7 @@ sharkgame.Artifacts = {
             return Math.floor(Math.pow(1.5, level + 1));
         }
         // effect is handled specially
-        // check sharkgame.Gateway.getMaxWorldQualitiesToShow
+        // check sharkgame.gateway.getMaxworldQualitiesToShow
     },
     sharkMigrator: {
         name: "Shark Migrator",
@@ -354,7 +354,7 @@ sharkgame.Artifacts = {
                 return;
             }
             var resourceList = ["tar", "ice"];
-            var wr = sharkgame.World.worldResources;
+            var wr = sharkgame.world.worldresources;
             var multiplier = 1 / (level + 1);
             _.each(resourceList, function(resourceName) {
                 if(wr[resourceName].artifactMultiplier) {
