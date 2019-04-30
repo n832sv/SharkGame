@@ -67,7 +67,7 @@ SharkGame.Gateway = {
         // set up classes
         var pane;
         if(!SharkGame.paneGenerated) {
-            pane = SharkGame.Main.buildPane();
+            pane = SharkGame.ui.buildPane();
         } else {
             pane = $('#pane');
         }
@@ -138,15 +138,15 @@ SharkGame.Gateway = {
 
         // add navigation buttons
         var navButtons = $('<div>').addClass("gatewayButtonList");
-        SharkGame.Button.makeButton("backToGateway", "artifacts", navButtons, function() {
+        SharkGame.ui.makeButton("backToGateway", "artifacts", navButtons, function() {
             g.switchViews(g.showArtifacts);
         });
-        SharkGame.Button.makeButton("backToGateway", "worlds", navButtons, function() {
+        SharkGame.ui.makeButton("backToGateway", "worlds", navButtons, function() {
             g.switchViews(g.showPlanets);
         });
         gatewayContent.append(navButtons);
 
-        m.showPane("GATEWAY", gatewayContent, true, 500, true);
+        SharkGame.ui.showPane("GATEWAY", gatewayContent, true, 500, true);
         g.transitioning = false;
     },
 
@@ -176,7 +176,7 @@ SharkGame.Gateway = {
             // there's something to show
             var artifactPool = $('<div>').addClass("gatewayButtonList");
             _.each(g.artifactPool, function(artifactName) {
-                SharkGame.Button.makeButton("artifact-" + artifactName, artifactName, artifactPool, g.onArtifactButton);
+                SharkGame.ui.makeButton("artifact-" + artifactName, artifactName, artifactPool, g.onArtifactButton);
             });
             gatewayContent.append(artifactPool);
             g.updateArtifactButtons();
@@ -184,12 +184,12 @@ SharkGame.Gateway = {
 
         // add return to gateway button
         var returnButtonDiv = $('<div>');
-        SharkGame.Button.makeButton("backToGateway", "return to gateway", returnButtonDiv, function() {
+        SharkGame.ui.makeButton("backToGateway", "return to gateway", returnButtonDiv, function() {
             g.switchViews(g.showGateway);
         });
         gatewayContent.append(returnButtonDiv);
 
-        m.showPane("ARTIFACTS", gatewayContent, true, 500, true);
+        SharkGame.ui.showPane("ARTIFACTS", gatewayContent, true, 500, true);
         g.transitioning = false;
     },
 
@@ -205,7 +205,7 @@ SharkGame.Gateway = {
         // show planet pool
         var planetPool = $('<div>').addClass("gatewayButtonList");
         _.each(g.planetPool, function(planetInfo) {
-            SharkGame.Button.makeButton("planet-" + planetInfo.type, planetInfo.type + " " + planetInfo.level, planetPool, function() {
+            SharkGame.ui.makeButton("planet-" + planetInfo.type, planetInfo.type + " " + planetInfo.level, planetPool, function() {
                 g.selectedWorld = $(this).attr("id").split("-")[1];
                 g.switchViews(g.confirmWorld);
             }).addClass("planetButton");
@@ -214,12 +214,12 @@ SharkGame.Gateway = {
 
         // add return to gateway button
         var returnButtonDiv = $('<div>');
-        SharkGame.Button.makeButton("backToGateway", "return to gateway", returnButtonDiv, function() {
+        SharkGame.ui.makeButton("backToGateway", "return to gateway", returnButtonDiv, function() {
             g.switchViews(g.showGateway);
         });
         gatewayContent.append(returnButtonDiv);
 
-        m.showPane("WORLDS", gatewayContent, true, 500, true);
+        SharkGame.ui.showPane("WORLDS", gatewayContent, true, 500, true);
         g.transitioning = false;
         g.updatePlanetButtons();
     },
@@ -257,7 +257,7 @@ SharkGame.Gateway = {
 
         // add confirm button
         var confirmButtonDiv = $('<div>');
-        SharkGame.Button.makeButton("progress", "proceed", confirmButtonDiv, function() {
+        SharkGame.ui.makeButton("progress", "proceed", confirmButtonDiv, function() {
             // kick back to main to start up the game again
             SharkGame.World.worldType = g.selectedWorld;
             SharkGame.World.planetLevel = planetLevel;
@@ -268,12 +268,12 @@ SharkGame.Gateway = {
 
         // add return to planets button
         var returnButtonDiv = $('<div>');
-        SharkGame.Button.makeButton("backToGateway", "reconsider", returnButtonDiv, function() {
+        SharkGame.ui.makeButton("backToGateway", "reconsider", returnButtonDiv, function() {
             g.switchViews(g.showPlanets);
         });
         gatewayContent.append(returnButtonDiv);
 
-        m.showPane("CONFIRM", gatewayContent, true, 500, true);
+        SharkGame.ui.showPane("CONFIRM", gatewayContent, true, 500, true);
         g.transitioning = false;
     },
 

@@ -48,7 +48,7 @@ SharkGame.Settings = {
             "pile"
         ],
         onChange: function() {
-            SharkGame.Main.changeTab(SharkGame.Tabs.current);
+            SharkGame.ui.changeTab(SharkGame.Tabs.current);
         }
     },
 
@@ -176,7 +176,7 @@ SharkGame.Settings = {
             false
         ],
         onChange: function() {
-            SharkGame.Main.changeTab(SharkGame.Tabs.current);
+            SharkGame.ui.changeTab(SharkGame.Tabs.current);
         }
     }
 

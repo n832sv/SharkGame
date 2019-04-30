@@ -366,7 +366,7 @@ SharkGame.Home = {
         var buttonListSel = $('#buttonList');
         var actionData = SharkGame.HomeActions[actionName];
 
-        var buttonSelector = SharkGame.Button.makeButton(actionName, actionData.name, buttonListSel, h.onHomeButton, "buttonhome");
+        var buttonSelector = SharkGame.ui.makeButton(actionName, actionData.name, buttonListSel, h.onHomeButton, "buttonhome");
         h.updateButton(actionName);
         if(SharkGame.Settings.current.showAnimations) {
             buttonSelector.hide()

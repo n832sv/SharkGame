@@ -164,8 +164,8 @@ SharkGame.Recycler = {
                 && y.allowedCategories[r.getCategoryOfResource(k)]
                 && y.bannedResources.indexOf(k) === -1 
 				&& y.allowedResources.indexOf(k) !== -1) {
-                SharkGame.Button.makeButton("input-" + k, "Recycle " + r.getResourceName(k), inputButtonDiv, y.onInput);
-                SharkGame.Button.makeButton("output-" + k, "Convert to " + r.getResourceName(k), outputButtonDiv, y.onOutput);
+                SharkGame.ui.makeButton("input-" + k, "Recycle " + r.getResourceName(k), inputButtonDiv, y.onInput);
+                SharkGame.ui.makeButton("output-" + k, "Convert to " + r.getResourceName(k), outputButtonDiv, y.onOutput);
             }
         });
     },

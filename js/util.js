@@ -1,3 +1,5 @@
+var SharkGame = SharkGame || {};
+
 SharkGame.MathUtil = {
 
     // a = current amount

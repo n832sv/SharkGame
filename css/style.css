@@ -286,12 +286,8 @@ pre {
   margin-right: auto;
 }
 
-.horizontal {
-  float: down;
-}
-
 #lhsnavigation {
-  padding: 0.5em 1em 0.5em 2.0em; 
+  padding: 0.5em 1em 0.5em 2.0em;
 }
 
 #lhsnavigation h5 {
@@ -402,16 +398,18 @@ pre {
 .pileArrangement button {
   display: inline-block;
   margin: 0.8em;
-  max-width: 12em;
+  max-width: 240px;
+  width: 240px;
 }
 .pileArrangement button.newlyDiscovered {
-  max-width: 12em;
+  max-width: 22em;
+  width: 240px;
 }
 button.newlyDiscovered {
   background-color: #3eb890;
   border-color: #ace3d1;
   text-shadow: 0 0 0.5em #bfe9dc;
-  max-width: 16em;
+  max-width: 240px;
   max-width: none;
 }
 button.newlyDiscovered div {
@@ -753,7 +751,7 @@ button:disabled div {
   width: 80%;
 }
 .buttonhome {
-  width: 320px;
+  width: 240px;
   height: 200px;
 }
 

@@ -440,7 +440,7 @@ SharkGame.Resources = {
         if(SharkGame.Settings.current.colorCosts) {
             var color = resource.color;
             if(darken) {
-                color = SharkGame.colorLum(resource.color, -0.5);
+                color = SharkGame.utilui.colorLum(resource.color, -0.5);
             }
             name = "<span class='click-passthrough' style='color:" + color + "'>" + name + "</span>";
         }
@@ -459,7 +459,7 @@ SharkGame.Resources = {
             // amend for unspecified resources (assume zero)
             if(listResource > 0 && SharkGame.World.doesResourceExist(k)) {
                 var isSingular = (Math.floor(listResource) - 1) < SharkGame.EPSILON;
-                formattedResourceList += SharkGame.Main.beautify(listResource);
+                formattedResourceList += SharkGame.utilui.beautify(listResource);
                 formattedResourceList += " " + SharkGame.Resources.getResourceName(k, darken, isSingular) + ", ";
             }
         });

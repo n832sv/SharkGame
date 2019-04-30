@@ -115,7 +115,7 @@ SharkGame.Stats = {
         var buttonDiv = $('#disposeResource');
         $.each(SharkGame.ResourceTable, function(k, v) {
             if(r.getTotalResource(k) > 0 && s.bannedDisposeCategories.indexOf(r.getCategoryOfResource(k)) === -1) {
-                SharkGame.Button.makeButton("dispose-" + k, "Dispose of " + r.getResourceName(k), buttonDiv, SharkGame.Stats.onDispose);
+                SharkGame.ui.makeButton("dispose-" + k, "Dispose of " + r.getResourceName(k), buttonDiv, SharkGame.Stats.onDispose);
             }
         });
     },
