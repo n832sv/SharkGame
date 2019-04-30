@@ -1,33 +1,33 @@
-SharkGame.Main.tick = function() {
+sharkgame.main.tick = function() {
 
-	if(SharkGame.gameOver) {
-		SharkGame.Gateway.update();
+	if(sharkgame.gameOver) {
+		sharkgame.Gateway.update();
 	} else {
-		
+
 		// tick main game stuff
 		var now = new Date();
-		var elapsedTime = (now.getTime() - SharkGame.before.getTime());
+		var elapsedTime = (now.getTime() - sharkgame.before.getTime());
+		var r = sharkgame.Resources;
 
-		var r = SharkGame.Resources;
-		var m = SharkGame.Main;
 
 		// check if the sidebar needs to come back
-		// if(SharkGame.sidebarHidden) { m.showSidebarIfNeeded(); }
+		// if(sharkgame.sidebarHidden) { m.showSidebarIfNeeded(); }
 
-		if(elapsedTime > SharkGame.INTERVAL) {
+		if(elapsedTime > sharkgame.INTERVAL) {
 			// Compensate for lost time.
-			m.processSimTime(SharkGame.dt * (elapsedTime / SharkGame.INTERVAL));
+			sharkgame.Resources.processIncomes(sharkgame.dt * (elapsedTime / sharkgame.INTERVAL));
 
 		} else {
-			m.processSimTime(SharkGame.dt);
+			sharkgame.Resources.processIncomes(sharkgame.dt);
 		}
-		r.updateResourcesTable();
 
-		var tabCode = SharkGame.Tabs[SharkGame.Tabs.current].code;
+		sharkgame.Resources.updateResourcesTable();
+
+		var tabCode = sharkgame.Tabs[sharkgame.Tabs.current].code;
 		tabCode.update();
 
-		m.checkTabUnlocks();
+		sharkgame.main.checkTabUnlocks();
 
-		SharkGame.before = new Date();
+		sharkgame.before = new Date();
 	}
 };

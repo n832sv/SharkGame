@@ -1,4 +1,4 @@
-SharkGame.WorldTypes = {
+sharkgame.WorldTypes = {
     test: {
         name: "Test",
         desc: "You REALLY shouldn't be seeing this.",

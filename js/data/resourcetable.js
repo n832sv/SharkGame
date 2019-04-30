@@ -1,4 +1,4 @@
-SharkGame.ResourceTable = {
+sharkgame.ResourceTable = {
 
     // SPECIAL
 
@@ -820,7 +820,7 @@ SharkGame.ResourceTable = {
 
 };
 
-SharkGame.ResourceCategories = {
+sharkgame.ResourceCategories = {
     special: {
         name: "Special",
         resources: [

@@ -1,4 +1,4 @@
-SharkGame.Reflection = {
+sharkgame.Reflection = {
 
     tabId: "reflection",
     tabDiscovered: false,
@@ -17,9 +17,9 @@ SharkGame.Reflection = {
     "</br><span='medDesc'>Reflect upon the changes in yourself and reality you have made here.</span>",
 
     init: function() {
-        var r = SharkGame.Reflection;
+        var r = sharkgame.Reflection;
         // register tab
-        SharkGame.Tabs[r.tabId] = {
+        sharkgame.Tabs[r.tabId] = {
             id: r.tabId,
             name: r.tabName,
             discovered: r.tabDiscovered,
@@ -29,13 +29,13 @@ SharkGame.Reflection = {
     },
 
     switchTo: function() {
-        var r = SharkGame.Reflection;
+        var r = sharkgame.Reflection;
         var content = $('#content');
         content.append($('<div>').attr("id", "tabMessage"));
         content.append($('<div>').attr("id", "artifactList"));
         var message = r.message;
         var tabMessageSel = $('#tabMessage');
-        if(SharkGame.Settings.current.showTabImages) {
+        if(sharkgame.Settings.current.showTabImages) {
             message = "<img width=400 height=200 src='" + r.sceneImage + "' id='tabSceneImageEssence'>" + message;
             tabMessageSel.css("background-image", "url('" + r.tabBg + "')");
         }
@@ -49,9 +49,9 @@ SharkGame.Reflection = {
     },
 
     updateArtifactList: function() {
-        var m = SharkGame.Main;
+        var m = sharkgame.main;
         var listSel = $('#artifactList');
-        $.each(SharkGame.Artifacts, function(artifactKey, artifactData) {
+        $.each(sharkgame.Artifacts, function(artifactKey, artifactData) {
             if(artifactData.level > 0) {
                 var maxedOut = artifactData.level >= artifactData.max;
                 var item = $('<div>').addClass("artifactDiv");
@@ -68,10 +68,10 @@ SharkGame.Reflection = {
                 listSel.append(item);
 
                 var spritename = "artifacts/" + artifactKey;
-                if(SharkGame.Settings.current.iconPositions !== "off") {
-                    var iconDiv = SharkGame.changeSprite(SharkGame.spriteIconPath, spritename, null, "general/missing-artifact");
+                if(sharkgame.Settings.current.iconPositions !== "off") {
+                    var iconDiv = sharkgame.changeSprite(sharkgame.spriteIconPath, spritename, null, "general/missing-artifact");
                     if(iconDiv) {
-                        iconDiv.addClass("button-icon-" + SharkGame.Settings.current.iconPositions);
+                        iconDiv.addClass("button-icon-" + sharkgame.Settings.current.iconPositions);
                         iconDiv.addClass("gatewayButton");
                         item.prepend(iconDiv);
                     }

@@ -1,4 +1,4 @@
-SharkGame.Gate = {
+sharkgame.Gate = {
 
     tabId: "gate",
     tabDiscovered: false,
@@ -27,9 +27,9 @@ SharkGame.Gate = {
     costs: null,
 
     init: function() {
-        var g = SharkGame.Gate;
+        var g = sharkgame.Gate;
         // register tab
-        SharkGame.Tabs[g.tabId] = {
+        sharkgame.Tabs[g.tabId] = {
             id: g.tabId,
             name: g.tabName,
             discovered: g.tabDiscovered,
@@ -40,7 +40,7 @@ SharkGame.Gate = {
     },
 
     createSlots: function(gateSlots, planetLevel, gateCostMultiplier) {
-        var g = SharkGame.Gate;
+        var g = sharkgame.Gate;
         // create costs
         g.costs = {};
         $.each(gateSlots, function(k, v) {
@@ -55,7 +55,7 @@ SharkGame.Gate = {
     },
 
     switchTo: function() {
-        var g = SharkGame.Gate;
+        var g = sharkgame.Gate;
         var content = $('#content');
         content.append($('<div>').attr("id", "tabMessage"));
         content.append($('<div>').attr("id", "buttonList"));
@@ -65,18 +65,18 @@ SharkGame.Gate = {
             var buttonList = $('#buttonList');
             $.each(g.costs, function(k, v) {
                 if(!g.costsMet[k]) {
-                    var resourceName = SharkGame.Resources.getResourceName(k);
-                    SharkGame.ui.makeButton("gateCost-" + k, "Insert " + resourceName + " into " + resourceName + " slot", buttonList, SharkGame.Gate.onGateButton);
+                    var resourceName = sharkgame.Resources.getResourceName(k);
+                    sharkgame.ui.makeButton("gateCost-" + k, "Insert " + resourceName + " into " + resourceName + " slot", buttonList, sharkgame.Gate.onGateButton);
                     amountOfSlots++;
                 }
             });
         } else {
-            SharkGame.ui.makeButton("gateEnter", "Enter gate", $('#buttonList'), g.onEnterButton);
+            sharkgame.ui.makeButton("gateEnter", "Enter gate", $('#buttonList'), g.onEnterButton);
         }
 
         var message = g.shouldBeOpen() ? g.messageOpened : (amountOfSlots > 1 ? g.message : g.messageOneSlot);
         var tabMessageSel = $('#tabMessage');
-        if(SharkGame.Settings.current.showTabImages) {
+        if(sharkgame.Settings.current.showTabImages) {
             message = "<img width=400 height=200 src='" + g.getSceneImagePath() + "' id='tabSceneImageEssence'>" + message;
             tabMessageSel.css("background-image", "url('" + g.tabBg + "')");
         }
@@ -87,43 +87,43 @@ SharkGame.Gate = {
     },
 
     onGateButton: function() {
-        var g = SharkGame.Gate;
-        var r= SharkGame.Resources;
+        var g = sharkgame.Gate;
+        var r= sharkgame.Resources;
         var resourceId = ($(this).attr("id")).split("-")[1];
 
         var message = "";
-        var cost = g.costs[resourceId] * (SharkGame.Resources.getResource("numen") + 1);
+        var cost = g.costs[resourceId] * (sharkgame.Resources.getResource("numen") + 1);
         if(r.getResource(resourceId) >= cost) {
-            SharkGame.Gate.costsMet[resourceId] = true;
-            SharkGame.Resources.changeResource(resourceId, -cost);
+            sharkgame.Gate.costsMet[resourceId] = true;
+            sharkgame.Resources.changeResource(resourceId, -cost);
             $(this).remove();
             if(g.shouldBeOpen()) {
                 message = g.messageAllPaid;
                 // add enter gate button
-                SharkGame.ui.makeButton("gateEnter", "Enter gate", $('#buttonList'), g.onEnterButton);
+                sharkgame.ui.makeButton("gateEnter", "Enter gate", $('#buttonList'), g.onEnterButton);
             } else {
                 message = g.messagePaid;
             }
         } else {
             message = g.messageCantPay + "<br/>";
             var diff = cost - r.getResource(resourceId);
-            message += SharkGame.Main.beautify(diff) + " more.";
+            message += sharkgame.main.beautify(diff) + " more.";
         }
-        if(SharkGame.Settings.current.showTabImages) {
+        if(sharkgame.Settings.current.showTabImages) {
             message = "<img width=400 height=200 src='" + g.getSceneImagePath() + "' id='tabSceneImageEssence'>" + message;
         }
         $('#tabMessage').html(message);
     },
 
     onEnterButton: function() {
-        $('#tabMessage').html(SharkGame.Gate.messageEnter);
+        $('#tabMessage').html(sharkgame.Gate.messageEnter);
         $(this).remove();
-        SharkGame.wonGame = true;
-        SharkGame.Main.endGame();
+        sharkgame.wonGame = true;
+        sharkgame.main.endGame();
     },
 
     shouldBeOpen: function() {
-        var g = SharkGame.Gate;
+        var g = sharkgame.Gate;
         var won = true;
         $.each(g.costsMet, function(_, v) {
             won = won && v;
@@ -132,7 +132,7 @@ SharkGame.Gate = {
     },
 
     getSceneImagePath: function() {
-        var g = SharkGame.Gate;
+        var g = sharkgame.Gate;
         var amountOfSlots = 0;
         $.each(g.costsMet, function(k, v) {
             if(v) amountOfSlots++;

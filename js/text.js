@@ -1,4 +1,4 @@
-SharkGame.text = {
+sharkgame.text = {
 
 
 

@@ -1,4 +1,4 @@
-SharkGame.Settings = {
+sharkgame.Settings = {
 
     current: {},
 
@@ -34,7 +34,7 @@ SharkGame.Settings = {
             false
         ],
         onChange: function() {
-            SharkGame.Resources.rebuildTable = true;
+            sharkgame.Resources.rebuildTable = true;
         }
     },
 
@@ -48,7 +48,7 @@ SharkGame.Settings = {
             "pile"
         ],
         onChange: function() {
-            SharkGame.ui.changeTab(SharkGame.Tabs.current);
+            sharkgame.ui.changeTab(sharkgame.Tabs.current);
         }
     },
 
@@ -77,9 +77,9 @@ SharkGame.Settings = {
             30
         ],
         onChange: function() {
-            clearInterval(SharkGame.Main.autosaveHandler);
-            SharkGame.Main.autosaveHandler = setInterval(SharkGame.Main.autosave, SharkGame.Settings.current.autosaveFrequency * 60000);
-            SharkGame.Log.addMessage("Now autosaving every " + SharkGame.Settings.current.autosaveFrequency + " minute" + SharkGame.plural(SharkGame.Settings.current.autosaveFrequency) + ".");
+            clearInterval(sharkgame.main.autosaveHandler);
+            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.Settings.current.autosaveFrequency * 60000);
+            sharkgame.Log.addMessage("Now autosaving every " + sharkgame.Settings.current.autosaveFrequency + " minute" + sharkgame.plural(sharkgame.Settings.current.autosaveFrequency) + ".");
         }
     },
 
@@ -98,7 +98,7 @@ SharkGame.Settings = {
             50
         ],
         onChange: function() {
-            SharkGame.Log.correctLogLength();
+            sharkgame.Log.correctLogLength();
         }
     },
 
@@ -119,10 +119,10 @@ SharkGame.Settings = {
         ],
         onChange: function() {
             var sidebar = $('#sidebar');
-            if(SharkGame.Settings.current.showAnimations) {
-                sidebar.animate({width: SharkGame.Settings.current.sidebarWidth}, "100");
+            if(sharkgame.Settings.current.showAnimations) {
+                sidebar.animate({width: sharkgame.Settings.current.sidebarWidth}, "100");
             } else {
-                sidebar.width(SharkGame.Settings.current.sidebarWidth);
+                sidebar.width(sharkgame.Settings.current.sidebarWidth);
             }
         }
     },
@@ -149,8 +149,8 @@ SharkGame.Settings = {
             false
         ],
         onChange: function() {
-            SharkGame.Resources.rebuildTable = true;
-            SharkGame.Stats.recreateIncomeTable = true;
+            sharkgame.Resources.rebuildTable = true;
+            sharkgame.Stats.recreateIncomeTable = true;
         }
     },
 
@@ -176,7 +176,7 @@ SharkGame.Settings = {
             false
         ],
         onChange: function() {
-            SharkGame.ui.changeTab(SharkGame.Tabs.current);
+            sharkgame.ui.changeTab(sharkgame.Tabs.current);
         }
     }
 

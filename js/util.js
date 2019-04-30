@@ -1,6 +1,6 @@
-var SharkGame = SharkGame || {};
+var sharkgame = sharkgame || {};
 
-SharkGame.MathUtil = {
+sharkgame.MathUtil = {
 
     // a = current amount
     // b = desired amount
@@ -60,7 +60,7 @@ SharkGame.MathUtil = {
         return 1;
     },
     
-    decay: function (offset, number, lambda, scale) {
+    decay: function (number, lambda, scale, offset) {
 		let n = Math.max(0, number-offset);
 		let e = Math.E;
 		function cdf (x, l) { return 1 - Math.pow(e, -l * x); };

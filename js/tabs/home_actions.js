@@ -1,4 +1,4 @@
-SharkGame.HomeActions = {
+sharkgame.HomeActions = {
 
     // FREEBIES ////////////////////////////////////////////////////////////////////////////////
 
@@ -1543,7 +1543,7 @@ SharkGame.HomeActions = {
 
 };
 
-SharkGame.HomeActionCategories = {
+sharkgame.HomeActionCategories = {
 
     all: { // This category should be handled specially.
         name: "All",

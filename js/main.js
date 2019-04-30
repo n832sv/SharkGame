@@ -1,8 +1,8 @@
-var SharkGame = SharkGame || {};
+var sharkgame = sharkgame || {};
 
 
 // CORE VARIABLES AND HELPER FUNCTIONS
-$.extend(SharkGame, {
+$.extend(sharkgame, {
     GAME_NAMES: [
 		"Five Seconds A Shark",
         "Fin Idle",
@@ -71,20 +71,20 @@ $.extend(SharkGame, {
             imagePath = "http://placekitten.com/g/" + Math.floor(width) + "/" + Math.floor(height);
         }
         var imageHtml = "";
-        if(SharkGame.Settings.current.iconPositions !== "off") {
-            imageHtml += "<img width=" + width + " height=" + height + " src='" + imagePath + "' class='button-icon-" + SharkGame.Settings.current.iconPositions + "'>";
+        if(sharkgame.Settings.current.iconPositions !== "off") {
+            imageHtml += "<img width=" + width + " height=" + height + " src='" + imagePath + "' class='button-icon-" + sharkgame.Settings.current.iconPositions + "'>";
         }
         return imageHtml;
     },
     changeSprite: function(spritePath, imageName, imageDiv, backupImageName) {
-        var spriteData = SharkGame.Sprites[imageName];
+        var spriteData = sharkgame.Sprites[imageName];
         if(!imageDiv) {
             imageDiv = $('<div>');
         }
 
         // if the original sprite data is undefined, try loading the backup
         if(!spriteData) {
-            spriteData = SharkGame.Sprites[backupImageName];
+            spriteData = sharkgame.Sprites[backupImageName];
         }
 
         if(spriteData) {
@@ -103,21 +103,21 @@ $.extend(SharkGame, {
 
 });
 
-SharkGame.TitleBar = {
+sharkgame.TitleBar = {
     saveLink: {
         name: "save",
         main: true,
         onClick: function() {
             try {
                 try {
-                    SharkGame.Save.saveGame();
+                    sharkgame.Save.saveGame();
                 } catch(err) {
-                    SharkGame.Log.addError(err);
+                    sharkgame.Log.addError(err);
                     console.log(err);
                 }
-                SharkGame.Log.addMessage("Saved game.");
+                sharkgame.Log.addMessage("Saved game.");
             } catch(err) {
-                SharkGame.Log.addError(err.message);
+                sharkgame.Log.addError(err.message);
             }
 
         }
@@ -127,7 +127,7 @@ SharkGame.TitleBar = {
         name: "options",
         main: true,
         onClick: function() {
-            SharkGame.ui.showOptions();
+            sharkgame.ui.showOptions();
         }
     },
 
@@ -135,7 +135,7 @@ SharkGame.TitleBar = {
         name: "help",
         main: true,
         onClick: function() {
-            SharkGame.ui.showHelp();
+            sharkgame.ui.showHelp();
         }
     },
 
@@ -143,131 +143,131 @@ SharkGame.TitleBar = {
         name: "skip",
         main: true,
         onClick: function() {
-            if(SharkGame.Main.isFirstTime()) {  // save people stranded on home world
+            if(sharkgame.main.isFirstTime()) {  // save people stranded on home world
                 if(confirm("Do you want to reset your game?")) {
                     // just reset
-                    SharkGame.Main.init();
+                    sharkgame.main.init();
                 }
             } else {
                 if(confirm("Is this world causing you too much trouble? Want to go back to the gateway?")) {
-                    SharkGame.wonGame = false;
-                    SharkGame.Main.endGame();
+                    sharkgame.wonGame = false;
+                    sharkgame.main.endGame();
                 }
             }
         }
     }
 };
 
-SharkGame.Tabs = {
+sharkgame.Tabs = {
     current: 'home'
 };
 
-SharkGame.Main = {
+sharkgame.main = {
 
     tickHandler: -1,
     autosaveHandler: -1,
 
-    beautify: SharkGame.utilui.beautify,
-    colorLum: SharkGame.utilui.colorLum,
-    formatTime: SharkGame.utilui.formatTime,
-    toTitleCase: SharkGame.utilui.toTitleCase,
+    beautify: sharkgame.utilui.beautify,
+    colorLum: sharkgame.utilui.colorLum,
+    formatTime: sharkgame.utilui.formatTime,
+    toTitleCase: sharkgame.utilui.toTitleCase,
 
     init: function() {
 
         var currDate = new Date();
-        SharkGame.before = currDate;
-        if(SharkGame.GAME_NAME === null) {
-            SharkGame.GAME_NAME = SharkGame.choose(SharkGame.GAME_NAMES);
-            document.title = SharkGame.ACTUAL_GAME_NAME + ": " + SharkGame.GAME_NAME;
+        sharkgame.before = currDate;
+        if(sharkgame.GAME_NAME === null) {
+            sharkgame.GAME_NAME = sharkgame.choose(sharkgame.GAME_NAMES);
+            document.title = sharkgame.ACTUAL_GAME_NAME + ": " + sharkgame.GAME_NAME;
         }
         // $('#sidebar').hide();
         var overlay = $('#overlay');
         overlay.hide();
-        $('#gameName').html(SharkGame.GAME_NAME);
-        $('#versionNumber').html("v " + SharkGame.VERSION + " — " + SharkGame.VERSION_NAME);
-        // SharkGame.sidebarHidden = true;
-        SharkGame.gameOver = false;
+        $('#gameName').html(sharkgame.GAME_NAME);
+        $('#versionNumber').html("v " + sharkgame.VERSION + " — " + sharkgame.VERSION_NAME);
+        // sharkgame.sidebarHidden = true;
+        sharkgame.gameOver = false;
 
         // remove any errant classes
         $('#pane').removeClass("gateway");
         overlay.removeClass("gateway");
 
         // initialise timestamps to something sensible
-        SharkGame.timestampLastSave = SharkGame.timestampLastSave || currDate.getTime();
-        SharkGame.timestampGameStart = SharkGame.timestampGameStart || currDate.getTime();
-        SharkGame.timestampRunStart = SharkGame.timestampRunStart || currDate.getTime();
+        sharkgame.timestampLastSave = sharkgame.timestampLastSave || currDate.getTime();
+        sharkgame.timestampGameStart = sharkgame.timestampGameStart || currDate.getTime();
+        sharkgame.timestampRunStart = sharkgame.timestampRunStart || currDate.getTime();
 
         // preserve settings or set defaults
-        $.each(SharkGame.Settings, function(k, v) {
+        $.each(sharkgame.Settings, function(k, v) {
             if(k === "current") {
                 return;
             }
-            var currentSetting = SharkGame.Settings.current[k];
+            var currentSetting = sharkgame.Settings.current[k];
             if(typeof(currentSetting) === "undefined") {
-                SharkGame.Settings.current[k] = v.defaultSetting
+                sharkgame.Settings.current[k] = v.defaultSetting
             }
         });
 
         // initialise and reset resources
-        SharkGame.Resources.init();
+        sharkgame.Resources.init();
 
         // initialise world
         // MAKE SURE GATE IS INITIALISED AFTER WORLD!!
-        SharkGame.World.init();
-        SharkGame.World.apply();
+        sharkgame.World.init();
+        sharkgame.World.apply();
 
-        SharkGame.Gateway.init();
-        SharkGame.Gateway.applyArtifacts(); // if there's any effects to carry over from a previous run
+        sharkgame.Gateway.init();
+        sharkgame.Gateway.applyArtifacts(); // if there's any effects to carry over from a previous run
 
         // reset log
-        SharkGame.Log.clearMessages();
+        sharkgame.Log.clearMessages();
 
         // initialise tabs
-        SharkGame.Home.init();
-        SharkGame.Lab.init();
-        SharkGame.Stats.init();
-        SharkGame.Recycler.init();
-        SharkGame.Gate.init();
-        SharkGame.Reflection.init();
+        sharkgame.Home.init();
+        sharkgame.Lab.init();
+        sharkgame.Stats.init();
+        sharkgame.Recycler.init();
+        sharkgame.Gate.init();
+        sharkgame.Reflection.init();
 
-        SharkGame.ui.setUpTitleBar();
+        sharkgame.ui.setUpTitleBar();
 
-        SharkGame.Tabs.current = "home";
+        sharkgame.Tabs.current = "home";
 
         // load save game data if present
-        if(SharkGame.Save.savedGameExists()) {
+        if(sharkgame.Save.savedGameExists()) {
             try{
-                SharkGame.Save.loadGame();
-                SharkGame.Log.addMessage("Loaded game.");
+                sharkgame.Save.loadGame();
+                sharkgame.Log.addMessage("Loaded game.");
             } catch(err) {
-                SharkGame.Log.addError(err.message);
+                sharkgame.Log.addError(err.message);
             }
         }
 
         // rename a game option if this is a first time run
-        if(SharkGame.Main.isFirstTime()) {
-            SharkGame.TitleBar.skipLink.name = "reset";
-            SharkGame.ui.setUpTitleBar();
+        if(sharkgame.main.isFirstTime()) {
+            sharkgame.TitleBar.skipLink.name = "reset";
+            sharkgame.ui.setUpTitleBar();
         }
 
         // discover actions that were present in last save
-        SharkGame.Home.discoverActions();
+        sharkgame.Home.discoverActions();
 
         // set up tab after load
-        SharkGame.ui.setUpTab();
+        sharkgame.ui.setUpTab();
 
 
-        if(SharkGame.Main.tickHandler === -1) {
-            SharkGame.Main.tickHandler = setInterval(SharkGame.Main.tick, SharkGame.INTERVAL);
+        if(sharkgame.main.tickHandler === -1) {
+            sharkgame.main.tickHandler = setInterval(sharkgame.main.tick, sharkgame.INTERVAL);
         }
 
-        if(SharkGame.Main.autosaveHandler === -1) {
-            SharkGame.Main.autosaveHandler = setInterval(SharkGame.Main.autosave, SharkGame.Settings.current.autosaveFrequency * 60000);
+        if(sharkgame.main.autosaveHandler === -1) {
+            sharkgame.main.autosaveHandler = setInterval(sharkgame.main.autosave, sharkgame.Settings.current.autosaveFrequency * 60000);
         }
     },
 
     checkTabUnlocks: function() {
-        $.each(SharkGame.Tabs, function(k, v) {
+        $.each(sharkgame.Tabs, function(k, v) {
             if(k === "current" || v.discovered) {
                 return;
             }
@@ -275,14 +275,14 @@ SharkGame.Main = {
 
             // check resources
             if(v.discoverReq.resource) {
-                reqsMet = reqsMet && SharkGame.Resources.checkResources(v.discoverReq.resource, true);
+                reqsMet = reqsMet && sharkgame.Resources.checkResources(v.discoverReq.resource, true);
             }
 
             // check upgrades
             if(v.discoverReq.upgrade) {
                 $.each(v.discoverReq.upgrade, function(_, value) {
-                    if(SharkGame.Upgrades[value]) {
-                        reqsMet = reqsMet && SharkGame.Upgrades[value].purchased;
+                    if(sharkgame.Upgrades[value]) {
+                        reqsMet = reqsMet && sharkgame.Upgrades[value].purchased;
                     } else {
                         reqsMet = false; // can't have a nonexistent upgrade
                     }
@@ -291,14 +291,14 @@ SharkGame.Main = {
 
             if(reqsMet) {
                 // unlock tab!
-                SharkGame.ui.discoverTab(k);
-                SharkGame.Log.addDiscovery("Discovered " + v.name + "!");
+                sharkgame.ui.discoverTab(k);
+                sharkgame.Log.addDiscovery("Discovered " + v.name + "!");
             }
         });
     },
 
     processSimTime: function(numberOfSeconds) {
-        var r = SharkGame.Resources;
+        var r = sharkgame.Resources;
 
         // income calculation
         r.processIncomes(numberOfSeconds);
@@ -306,10 +306,10 @@ SharkGame.Main = {
 
     autosave: function() {
         try {
-            SharkGame.Save.saveGame();
-            SharkGame.Log.addMessage("Autosaved.");
+            sharkgame.Save.saveGame();
+            sharkgame.Log.addMessage("Autosaved.");
         } catch(err) {
-            SharkGame.Log.addError(err.message);
+            sharkgame.Log.addError(err.message);
             console.log(err.trace);
         }
     },
@@ -321,7 +321,7 @@ SharkGame.Main = {
         var optionIndex = parseInt(settingInfo[2]);
 
         // change setting to specified setting!
-        SharkGame.Settings.current[settingName] = SharkGame.Settings[settingName].options[optionIndex];
+        sharkgame.Settings.current[settingName] = sharkgame.Settings[settingName].options[optionIndex];
 
         // update relevant table cell!
 //        $('#option-' + settingName)
@@ -334,74 +334,74 @@ SharkGame.Main = {
         $(this).attr("disabled", "true");
 
         // if there is a callback, call it, else call the no op
-        (SharkGame.Settings[settingName].onChange || $.noop)();
+        (sharkgame.Settings[settingName].onChange || $.noop)();
     },
 
     endGame: function(loadingFromSave) {
         // stop autosaving
-        clearInterval(SharkGame.Main.autosaveHandler);
-        SharkGame.Main.autosaveHandler = -1;
+        clearInterval(sharkgame.main.autosaveHandler);
+        sharkgame.main.autosaveHandler = -1;
 
         // flag game as over
-        SharkGame.gameOver = true;
+        sharkgame.gameOver = true;
 
         // grab end game timestamp
-        SharkGame.timestampRunEnd = (new Date()).getTime();
+        sharkgame.timestampRunEnd = (new Date()).getTime();
 
         // kick over to passage
-        SharkGame.Gateway.enterGate(loadingFromSave);
+        sharkgame.Gateway.enterGate(loadingFromSave);
     },
 
     purgeGame: function() {
         // empty out all the containers!
         $('#status').empty();
-        SharkGame.Log.clearMessages();
+        sharkgame.Log.clearMessages();
         $('#content').empty();
     },
 
     loopGame: function() {
-        if(SharkGame.gameOver) {
-            SharkGame.gameOver = false;
-            SharkGame.wonGame = false;
-            SharkGame.ui.showPane();
+        if(sharkgame.gameOver) {
+            sharkgame.gameOver = false;
+            sharkgame.wonGame = false;
+            sharkgame.ui.showPane();
 
             // copy over all special category resources
             // artifacts are preserved automatically within gateway file
             var backup = {};
-            _.each(SharkGame.ResourceCategories.special.resources, function(resourceName) {
-                backup[resourceName] = {amount: SharkGame.Resources.getResource(resourceName), totalAmount: SharkGame.Resources.getTotalResource(resourceName)};
+            _.each(sharkgame.ResourceCategories.special.resources, function(resourceName) {
+                backup[resourceName] = {amount: sharkgame.Resources.getResource(resourceName), totalAmount: sharkgame.Resources.getTotalResource(resourceName)};
             });
 
-            SharkGame.Save.deleteSave(); // otherwise it will be loaded during main init and fuck up everything!!
-            SharkGame.Main.init();
-            SharkGame.Log.addMessage(SharkGame.World.getWorldEntryMessage());
+            sharkgame.Save.deleteSave(); // otherwise it will be loaded during main init and fuck up everything!!
+            sharkgame.main.init();
+            sharkgame.Log.addMessage(sharkgame.World.getWorldEntryMessage());
 
             // restore special resources
             $.each(backup, function(resourceName, resourceData) {
-                SharkGame.Resources.setResource(resourceName, resourceData.amount);
-                SharkGame.Resources.setTotalResource(resourceName, resourceData.totalAmount);
+                sharkgame.Resources.setResource(resourceName, resourceData.amount);
+                sharkgame.Resources.setTotalResource(resourceName, resourceData.totalAmount);
             });
 
-            SharkGame.timestampRunStart = (new Date()).getTime();
+            sharkgame.timestampRunStart = (new Date()).getTime();
             try {
-                SharkGame.Save.saveGame();
-                SharkGame.Log.addMessage("Game saved.");
+                sharkgame.Save.saveGame();
+                sharkgame.Log.addMessage("Game saved.");
             } catch(err) {
-                SharkGame.Log.addError(err.message);
+                sharkgame.Log.addError(err.message);
                 console.log(err.trace);
             }
         }
     },
 
     isFirstTime: function() {
-        return SharkGame.World.worldType === "start" && !(SharkGame.Resources.getTotalResource("essence") > 0);
+        return sharkgame.World.worldType === "start" && !(sharkgame.Resources.getTotalResource("essence") > 0);
     },
 
     // DEBUG FUNCTIONS
     discoverAll: function() {
-        $.each(SharkGame.Tabs, function(k, v) {
+        $.each(sharkgame.Tabs, function(k, v) {
             if(k !== "current") {
-                SharkGame.Main.discoverTab(k);
+                sharkgame.main.discoverTab(k);
             }
         });
     }
@@ -410,7 +410,7 @@ SharkGame.Main = {
 
 $(document).ready(function() {
     $('#game').show();
-    SharkGame.Main.init();
+    sharkgame.main.init();
 
     // ctrl+s saves
     $(window).bind('keydown', function(event) {
@@ -418,11 +418,11 @@ $(document).ready(function() {
             switch (String.fromCharCode(event.which).toLowerCase()) {
                 case 's':
                     event.preventDefault();
-                    SharkGame.Save.saveGame();
+                    sharkgame.Save.saveGame();
                     break;
                 case 'o':
                     event.preventDefault();
-                    SharkGame.ui.showOptions();
+                    sharkgame.ui.showOptions();
                     break;
             }
         }

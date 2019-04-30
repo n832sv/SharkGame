@@ -1,6 +1,6 @@
-var SharkGame = SharkGame || {};
+var sharkgame = sharkgame || {};
 
-SharkGame.utilui = {
+sharkgame.utilui = {
 
     beautify: function(number, suppressDecimals) {
 
@@ -29,8 +29,8 @@ SharkGame.utilui = {
                 number *= -1;
             }
             var suffixes = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc"];
-            var digits = Math.floor(SharkGame.log10(number));
-            var precision = 2 - (Math.floor(SharkGame.log10(number)) % 3);
+            var digits = Math.floor(sharkgame.log10(number));
+            var precision = 2 - (Math.floor(sharkgame.log10(number)) % 3);
             // in case the highest supported suffix is not specified
             precision = Math.max(0, precision);
             var suffixIndex = Math.floor(digits / 3);

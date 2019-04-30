@@ -1,4 +1,4 @@
-SharkGame.Upgrades = {
+sharkgame.Upgrades = {
     crystalBite: {
         name: "Crystal Bite-Gear",
         desc: "Bite the crystals we have into something to help biting!",
@@ -1183,7 +1183,7 @@ SharkGame.Upgrades = {
     eightfoldOptimisation: {
         name: "Eightfold Optimisation",
         desc: "Enhance productivity. Optimise. Improve. Improve.",
-        researchedMessage: "Peak productivity attained. Maintain course. Maintain efficiency.",
+        researchedMessage: "Peak productivity attained. maintain course. maintain efficiency.",
         effectDesc: "Octopuses and their roles, as well as their machines, are all four times as effective. Optimised.",
         cost: {
             science: 8E10

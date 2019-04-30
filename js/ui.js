@@ -1,11 +1,11 @@
-SharkGame.ui = {
+sharkgame.ui = {
 
 	setUpTitleBar: function() {
         var titleMenu = $('#titlemenu');
         var subTitleMenu = $('#subtitlemenu');
         titleMenu.empty();
         subTitleMenu.empty();
-        $.each(SharkGame.TitleBar, function(k, v) {
+        $.each(sharkgame.TitleBar, function(k, v) {
             var option = "<li><a id='" + k + "' href='javascript:;'>" + v.name + "</a></li>";
             if(v.main) {
                 titleMenu.append(option);
@@ -17,14 +17,14 @@ SharkGame.ui = {
 	},
 
     setUpTab: function() {
-        var tabs = SharkGame.Tabs;
+        var tabs = sharkgame.Tabs;
         // empty out content div
         var content = $('#content');
         content.empty();
         content.append('<div id="contentMenu"><ul id="tabList"></ul><ul id="tabButtons"></ul></div><div id="tabBorder" class="clear-fix"></div>');
 
-        SharkGame.ui.createTabNavigation();
-        SharkGame.ui.createBuyButtons();
+        sharkgame.ui.createTabNavigation();
+        sharkgame.ui.createBuyButtons();
 
         // set up tab specific stuff
         var tab = tabs[tabs.current];
@@ -33,12 +33,12 @@ SharkGame.ui = {
     },
 
     createTabMenu: function() {
-        SharkGame.ui.createTabNavigation();
-        SharkGame.ui.createBuyButtons();
+        sharkgame.ui.createTabNavigation();
+        sharkgame.ui.createBuyButtons();
     },
     
     createTabNavigation: function() {
-        var tabs = SharkGame.Tabs;
+        var tabs = sharkgame.Tabs;
         var tabList = $('#tabList');
         tabList.empty();
         // add navigation
@@ -53,7 +53,7 @@ SharkGame.ui = {
             // add a header for each discovered tab
             // make it a link if it's not the current tab
             $.each(tabs, function(k, v) {
-                var onThisTab = (SharkGame.Tabs.current === k);
+                var onThisTab = (sharkgame.Tabs.current === k);
                 if(v.discovered) {
                     var tabListItem = $('<li>');
                     if(onThisTab) {
@@ -65,7 +65,7 @@ SharkGame.ui = {
                                 .html(v.name)
                                 .click(function() {
                                     var tab = ($(this).attr("id")).split("-")[1];
-                                    SharkGame.ui.changeTab(tab);
+                                    sharkgame.ui.changeTab(tab);
                                 })
                         );
                     }
@@ -79,9 +79,9 @@ SharkGame.ui = {
         // add buy buttons
         var buttonList = $('#tabButtons');
         buttonList.empty();
-        $.each(SharkGame.Settings.buyAmount.options, function(_, v) {
+        $.each(sharkgame.Settings.buyAmount.options, function(_, v) {
             var amount = v;
-            var disableButton = (v === SharkGame.Settings.current.buyAmount);
+            var disableButton = (v === sharkgame.Settings.current.buyAmount);
             buttonList.prepend($('<li>')
                 .append($('<button>')
                     .addClass("min buybuttons")
@@ -98,12 +98,12 @@ SharkGame.ui = {
                     label += "max"
                 }
             } else {
-                label += SharkGame.Main.beautify(amount);
+                label += sharkgame.main.beautify(amount);
             }
             $('#buy-' + v).html(label)
                 .click(function() {
                     var thisButton = $(this);
-                    SharkGame.Settings.current.buyAmount = parseInt(thisButton.attr("id").slice(4));
+                    sharkgame.Settings.current.buyAmount = parseInt(thisButton.attr("id").slice(4));
                     $("button[id^='buy-']").prop("disabled", false);
                     thisButton.prop("disabled", true);
                 });
@@ -111,34 +111,34 @@ SharkGame.ui = {
     },
 
     changeTab: function(tab) {
-        SharkGame.Tabs.current = tab;
-        SharkGame.ui.setUpTab();
+        sharkgame.Tabs.current = tab;
+        sharkgame.ui.setUpTab();
     },
 
     discoverTab: function(tab) {
-        SharkGame.Tabs[tab].discovered = true;
+        sharkgame.Tabs[tab].discovered = true;
         // force a total redraw of the navigation
-        SharkGame.ui.createTabMenu();
+        sharkgame.ui.createTabMenu();
     },
     
     showOptions: function() {
-        var optionsContent = SharkGame.ui.setUpOptions();
-        SharkGame.ui.showPane("Options", optionsContent);
+        var optionsContent = sharkgame.ui.setUpOptions();
+        sharkgame.ui.showPane("Options", optionsContent);
     },
     
     showSidebarIfNeeded: function() {
-		if(SharkGame.Settings.current.showAnimations) {
+		if(sharkgame.Settings.current.showAnimations) {
 			$('#sidebar').show("500");
         } else {
             $('#sidebar').show();
         }
-        SharkGame.sidebarHidden = false;
+        sharkgame.sidebarHidden = false;
     },
     
     setUpOptions: function() {
         var optionsTable = $('<table>').attr("id", "optionTable");
         // add settings specified in settings.js
-        $.each(SharkGame.Settings, function(key, value) {
+        $.each(sharkgame.Settings, function(key, value) {
             if(key === "current" || !value.show) {
                 return;
             }
@@ -151,7 +151,7 @@ SharkGame.ui = {
                     "<br/><span class='smallDesc'>" + "(" + value.desc + ")" + "</span>")
             );
 
-            var currentSetting = SharkGame.Settings.current[key];
+            var currentSetting = sharkgame.Settings.current[key];
 
             // show setting adjustment buttons
             $.each(value.options, function(k, v) {
@@ -161,7 +161,7 @@ SharkGame.ui = {
                         .addClass("option-button")
                         .prop("disabled", isCurrentSetting)
                         .html((typeof v === "boolean") ? (v ? "on" : "off") : v)
-                        .click(SharkGame.Main.onOptionClick)
+                        .click(sharkgame.main.onOptionClick)
                 ));
             });
 
@@ -180,10 +180,10 @@ SharkGame.ui = {
                 .click(function() {
                     var importText = $('#importExportField').val();
                     if(importText === "") {
-                        SharkGame.hidePane();
-                        SharkGame.Log.addError("You need to paste something in first!");
+                        sharkgame.hidePane();
+                        sharkgame.Log.addError("You need to paste something in first!");
                     } else if(confirm("Are you absolutely sure? This will override your current save.")) {
-                        SharkGame.Save.importData(importText);
+                        sharkgame.Save.importData(importText);
                     }
                 })
         ));
@@ -191,7 +191,7 @@ SharkGame.ui = {
                 .html("export")
                 .addClass("option-button")
                 .click(function() {
-                    $('#importExportField').val(SharkGame.Save.exportData());
+                    $('#importExportField').val(sharkgame.Save.exportData());
                 })
         ));
         // add the actual text box
@@ -214,12 +214,12 @@ SharkGame.ui = {
                 .addClass("option-button")
                 .click(function() {
                     if(confirm("Are you absolutely sure you want to wipe your save?\nIt'll be gone forever!")) {
-                        SharkGame.Save.deleteSave();
-                        SharkGame.Gateway.deleteArtifacts(); // they're out of the save data, but not the working game memory!
-                        SharkGame.Resources.reconstructResourcesTable();
-                        SharkGame.World.worldType = "start"; // nothing else will reset this
-                        SharkGame.World.planetLevel = 1;
-                        SharkGame.Main.init(); // reset
+                        sharkgame.Save.deleteSave();
+                        sharkgame.Gateway.deleteArtifacts(); // they're out of the save data, but not the working game memory!
+                        sharkgame.Resources.reconstructResourcesTable();
+                        sharkgame.World.worldType = "start"; // nothing else will reset this
+                        sharkgame.World.planetLevel = 1;
+                        sharkgame.main.init(); // reset
                     }
                 })
         ));
@@ -229,7 +229,7 @@ SharkGame.ui = {
     
     showChangelog: function() {
         var changelogContent = $('<div>').attr("id", "changelogDiv");
-        $.each(SharkGame.Changelog, function(version, changes) {
+        $.each(sharkgame.Changelog, function(version, changes) {
             var segment = $('<div>').addClass("paneContentDiv");
             segment.append($('<h3>').html(version + ": "));
             var changeList = $('<ul>');
@@ -239,13 +239,13 @@ SharkGame.ui = {
             segment.append(changeList);
             changelogContent.append(segment);
         });
-        SharkGame.ui.showPane("Changelog", changelogContent);
+        sharkgame.ui.showPane("Changelog", changelogContent);
     },
     
     showHelp: function() {
         var helpDiv = $('<div>');
-        helpDiv.append($('<div>').append(SharkGame.help).addClass("paneContentDiv"));
-        SharkGame.ui.showPane("Help", helpDiv);
+        helpDiv.append($('<div>').append(sharkgame.help).addClass("paneContentDiv"));
+        sharkgame.ui.showPane("Help", helpDiv);
     },
     
     buildPane: function() {
@@ -262,14 +262,14 @@ SharkGame.ui = {
                 .attr("id", "paneHeaderCloseButton")
                 .addClass("min")
                 .html("&nbsp x &nbsp")
-                .click(SharkGame.ui.hidePane)
+                .click(sharkgame.ui.hidePane)
         ));
         pane.append(titleDiv);
         pane.append($('<div>').attr("id", "paneHeaderEnd").addClass("clear-fix"));
         pane.append($('<div>').attr("id", "paneContent"));
 
         pane.hide();
-        SharkGame.paneGenerated = true;
+        sharkgame.paneGenerated = true;
         return pane;
     },
 
@@ -277,8 +277,8 @@ SharkGame.ui = {
         var pane;
 
         // GENERATE PANE IF THIS IS THE FIRST TIME
-        if(!SharkGame.paneGenerated) {
-            pane = SharkGame.ui.buildPane();
+        if(!sharkgame.paneGenerated) {
+            pane = sharkgame.ui.buildPane();
         } else {
             pane = $('#pane');
         }
@@ -290,7 +290,7 @@ SharkGame.ui = {
         if(overlay.is(':hidden')) {
             // nope, show overlay
             var overlayOpacity = customOpacity || 0.5;
-            if(SharkGame.Settings.current.showAnimations) {
+            if(sharkgame.Settings.current.showAnimations) {
                 overlay.show()
                     .css("opacity", 0)
                     .animate({opacity: overlayOpacity}, fadeInTime);
@@ -331,7 +331,7 @@ SharkGame.ui = {
         paneContent.empty();
 
         paneContent.append(contents);
-        if(SharkGame.Settings.current.showAnimations && customOpacity) {
+        if(sharkgame.Settings.current.showAnimations && customOpacity) {
             pane.show()
                 .css("opacity", 0)
                 .animate({opacity: 1.0}, fadeInTime);
@@ -358,6 +358,35 @@ SharkGame.ui = {
         return $('#' + id).html(name)
             .unbind('click')
             .click(handler);
-    }
+    },
+    
+    constructResourceTableRowHTML: function(resource_key, resource_name, income, amount, total_amount, color) {
+
+        let row = $('<tr>');
+        
+        if(total_amount > 0) {
+            row.append($('<td>')
+                    .attr("id", "resource-" + resource_key)
+                    .html(resource_name)
+            );
+
+            row.append($('<td>')
+                    .attr("id", "amount-" + resource_key)
+                    .html(sharkgame.utilui.beautify(amount))
+            );
+
+            let incomeId = $('<td>')
+                .attr("id", "income-" + resource_key);
+
+            row.append(incomeId);
+
+            if(Math.abs(income) > sharkgame.EPSILON) {
+                var changeChar = income > 0 ? "+" : "";
+                incomeId.html("<span style='color:" + color + "'>" + changeChar + sharkgame.utilui.beautify(income) + "/s</span>");
+            }
+        }
+
+        return row;
+    },
 
 };
